@@ -135,11 +135,8 @@ export class WebdavCli {
           } catch {}
         }
       }	      }*/
-            console.log(
-                ctx.request.method,
-                ctx.request.url,
-                ctx.request.headers,
-            );
+            const { url, headers, method } = ctx.request;
+            console.log({ method, url }, headers);
             next();
         });
 

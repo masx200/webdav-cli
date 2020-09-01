@@ -106,11 +106,8 @@ class WebdavCli {
         });
         server.config = config;
         server.beforeRequest(async (ctx, next) => {
-            console.log(
-                ctx.request.method,
-                ctx.request.url,
-                ctx.request.headers,
-            );
+            const { url, headers, method } = ctx.request;
+            console.log({ method, url }, headers);
             next();
         });
         server.afterRequest((arg, next) => {
