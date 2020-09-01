@@ -46,6 +46,8 @@ class WebdavCli {
             webdav_cli_constants_1.RIGHTS.includes(item),
         );
         const url = `${ssl ? 'https' : 'http'}://${host}:${port}`;
+        const directory = Boolean(config.directory);
+        const autoIndex = Boolean(config.autoIndex);
         return {
             host,
             path,
@@ -59,6 +61,8 @@ class WebdavCli {
             rights,
             url,
             disableAuthentication,
+            directory,
+            autoIndex,
         };
     }
     async start() {

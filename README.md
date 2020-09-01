@@ -40,7 +40,7 @@ npx @masx200/webdav-cli [options]
 npx @masx200/webdav-cli --help
 ```
 
-```bash
+```txt
    usage: webdav-cli [options]
 
 options:
@@ -79,7 +79,7 @@ env:
 
 First, you need to make sure that openssl is installed correctly, and you have `key.pem` and `cert.pem` files. You can generate them using this command:
 
-```bash
+```shell
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
 ```
 
