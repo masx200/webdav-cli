@@ -1,0 +1,73 @@
+{
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.com"
+    },
+    "name": "@masx200/webdav-cli",
+    "version": "1.0.4",
+    "description": "A simple zero-configuration command-line webdav server",
+    "license": "MIT",
+    "keywords": [
+        "cli",
+        "command",
+        "webdav",
+        "server"
+    ],
+    "files": [
+        "dist",
+        "certs",
+        "index.js",
+        "index.d.ts"
+    ],
+    "bin": {
+        "webdav-cli": "dist/webdav-cli.cli.js"
+    },
+    "preferGlobal": true,
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "node ./dist/webdav-cli.cli.js --username root --password root",
+        "fix": "rm -rf node_modules && rm package-lock.json && npm install",
+        "build": " tsc -p tsconfig.build.json",
+        "format": "prettier --write \"**/*.ts\" **/*.js *.json *.md",
+        "lint": "eslint 'lib/**/*.ts' --fix",
+        "test": "jest --config ./test/jest.config.json --runInBand",
+        "release": "release-it"
+    },
+    "devDependencies": {
+        "@types/figlet": "^1.2.0",
+        "@types/jest": "^26.0.12",
+        "@types/minimist": "^1.2.0",
+        "@types/node": "^14.6.2",
+        "@types/supertest": "^2.0.10",
+        "@typescript-eslint/eslint-plugin": "^4.0.1",
+        "@typescript-eslint/parser": "^4.0.1",
+        "eslint": "^7.8.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.22.0",
+        "jest": "^26.4.2",
+        "prettier": "^2.1.1",
+        "reflect-metadata": "^0.1.13",
+        "release-it": "^13.7.0",
+        "supertest": "^4.0.2",
+        "ts-jest": "^26.3.0",
+        "ts-loader": "^8.0.3",
+        "ts-node": "^9.0.0",
+        "tsconfig-paths": "^3.9.0",
+        "typescript": "^4.0.2"
+    },
+    "dependencies": {
+        "chalk": "^4.1.0",
+        "figlet": "^1.3.0",
+        "minimist": "^1.2.5",
+        "webdav-server": "^2.6.2"
+    },
+    "directories": {
+        "test": "test"
+    },
+    "repository": "git+https://github.com/masx200/webdav-cli.git",
+    "author": "masx200 <masx200@qq.com>",
+    "bugs": {
+        "url": "https://github.com/masx200/webdav-cli/issues"
+    },
+    "homepage": "https://github.com/masx200/webdav-cli#readme"
+}
