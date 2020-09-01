@@ -6,11 +6,15 @@ https://github.com/svtslv/webdav-cli
 
 ## Table of Contents
 
--   [Description](#description)
--   [Installation](#installation)
--   [Examples](#examples)
--   [TLS/SSL](#tlsssl)
--   [License](#license)
+-   [WebDAV CLI](#webdav-cli)
+    -   [Table of Contents](#table-of-contents)
+    -   [Description](#description)
+    -   [Installation](#installation)
+        -   [Globally via yarn](#globally-via-yarn)
+        -   [Running on-demand:](#running-on-demand)
+    -   [Examples](#examples)
+    -   [TLS/SSL](#tlsssl)
+    -   [License](#license)
 
 ## Description
 
@@ -18,7 +22,7 @@ A simple zero-configuration command-line webdav server
 
 ## Installation
 
-#### Globally via `npm`
+#### Globally via yarn
 
 ```bash
 yarn global add @masx200/webdav-cli
@@ -37,21 +41,24 @@ npx @masx200/webdav-cli --help
 ```
 
 ```bash
-    'usage: webdav-cli [options]',
-    '',
-    'options:',
-    '  --path       Path to folder [process.cwd()]',
-    '  --host       Host to use [127.0.0.1]',
-    '  --port       Port to use [1900]',
-    '  --digest     Enable digest authentication [basic]',
-    '  --username   Username for basic/digest authentication [random]',
-    '  --password   Password for basic/digest authentication [random]',
-    '  --ssl        Enable https [false]',
-    '  --sslKey     Path to ssl key file [self-signed]',
-    '  --sslCert    Path to ssl cert file [self-signed]',
-    '  --help       Print this list and exit',
-    '  --version    Print the version and exit.',
-    '  --rights     Comma separated values without spaces [all]', `
+   usage: webdav-cli [options]
+
+options:
+  --path       Path to folder [process.cwd()]
+  --host       Host to use [127.0.0.1]
+  --port       Port to use [1900]
+  --digest     Enable digest authentication [basic]
+  --username   Username for basic/digest authentication [random]
+  --password   Password for basic/digest authentication [random]
+  --directory  Show directory listings [false]
+  --autoIndex  Display autoIndex [false]
+  --ssl        Enable https [false]
+  --sslKey     Path to ssl key file [self-signed]
+  --sslCert    Path to ssl cert file [self-signed]
+  --help       Print this list and exit
+  --version    Print the version and exit.
+  --rights     Comma separated values without spaces [all]
+
         'all', 'canCreate', 'canDelete', 'canMove', 'canRename',
         'canAppend', 'canWrite', 'canRead', 'canSource',
         'canGetMimeType', 'canGetSize', 'canListLocks',
@@ -59,12 +66,13 @@ npx @masx200/webdav-cli --help
         'canGetLock', 'canAddChild', 'canRemoveChild',
         'canGetChildren', 'canSetProperty', 'canGetProperty',
         'canGetProperties', 'canRemoveProperty', 'canGetCreationDate',
-        'canGetLastModifiedDate', 'canGetWebName', 'canGetType'`,
-    'env:',
-    '  WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,',
-    '  WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,',
-    '  WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,',
-    '  WEBDAV_CLI_RIGHTS, WEBDAV_CLI_DISABLE_AUTHENTICATION',
+        'canGetLastModifiedDate', 'canGetWebName', 'canGetType'
+env:
+  WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,
+  WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,
+  WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,
+  WEBDAV_CLI_DIRECTORY, WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS
+  WEBDAV_CLI_DISABLE_AUTHENTICATION
 ```
 
 ## TLS/SSL
