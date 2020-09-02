@@ -139,7 +139,16 @@ export class WebdavCli {
             console.log({ method, url }, headers);
             next();
         });
-
+        server.beforeRequest((arg, next) => {
+            const { headers, method } = arg.request;
+            const { depth } = headers;
+            if (method === 'PROPFIND' && depth !== '0' && depth !== '1') {
+                arg.setCode(403);
+                arg.exit();
+            } else {
+                next();
+            }
+        });
         server.afterRequest((arg, next) => {
             const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} ${arg.response.statusMessage}`;
             // server.emit('log', null, null, '/', log);
