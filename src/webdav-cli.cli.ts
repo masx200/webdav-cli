@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import process from 'process';
-import * as chalk from 'chalk';
-import * as figlet from 'figlet';
-import * as minimist from 'minimist';
+import chalk from 'chalk';
+import figlet from 'figlet';
+import minimist from 'minimist';
 import { WebdavCli } from './webdav-cli.server';
 // import { HOMEPAGE } from './webdav-cli.constants';
 
