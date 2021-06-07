@@ -11,9 +11,10 @@ import {
 
 export class WebdavCli {
     config: WebdavCliConfig;
-
+    server: webdav.WebDAVServer;
     constructor(config: Partial<WebdavCliConfig>) {
         this.config = this.getConfig(config);
+        this.server = this.init();
     }
 
     getConfig(config: Partial<WebdavCliConfig>): WebdavCliConfig {
@@ -70,7 +71,7 @@ export class WebdavCli {
         };
     }
 
-    async start(): Promise<WebdavCliServer> {
+    init(): webdav.WebDAVServer {
         const config = this.config;
 
         const userManager = new webdav.SimpleUserManager();
@@ -110,9 +111,9 @@ export class WebdavCli {
                 : undefined,
             port: config.port,
             hostname: config.host,
-        }) as WebdavCliServer;
+        });
 
-        server.config = config;
+        //  server.config = config;
 
         server.beforeRequest(async (ctx, next) => {
             /*  if (config.directory) {
@@ -154,6 +155,12 @@ export class WebdavCli {
             next();
         });
 
+        return server;
+    }
+    async start() {
+        const config = this.config;
+        const { server } = this;
+        console.log(config);
         await server.setFileSystemAsync(
             "/",
             new webdav.PhysicalFileSystem(config.path),
@@ -171,7 +178,5 @@ export class WebdavCli {
         ];
 
         console.log(logs.join("\n"));
-
-        return server;
     }
 }

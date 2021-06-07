@@ -1,7 +1,10 @@
-import { WebdavCliServer, WebdavCliConfig } from "./webdav-cli.interfaces";
+import { v2 as webdav } from "webdav-server";
+import { WebdavCliConfig } from "./webdav-cli.interfaces";
 export declare class WebdavCli {
     config: WebdavCliConfig;
+    server: webdav.WebDAVServer;
     constructor(config: Partial<WebdavCliConfig>);
     getConfig(config: Partial<WebdavCliConfig>): WebdavCliConfig;
-    start(): Promise<WebdavCliServer>;
+    init(): webdav.WebDAVServer;
+    start(): Promise<void>;
 }

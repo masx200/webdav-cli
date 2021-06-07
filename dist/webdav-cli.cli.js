@@ -80,8 +80,7 @@ const config = {
 };
 const run = async () => {
     const webdavCli = new webdav_cli_server_1.WebdavCli(config);
-    const webdavCliServer = await webdavCli.start();
-    console.log(webdavCliServer.config);
+    await webdavCli.start();
 };
 run();
 process_1.default.on("unhandledRejection", (e) => {

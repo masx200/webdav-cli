@@ -88,9 +88,8 @@ const config = {
 const run = async () => {
     const webdavCli = new WebdavCli(config);
 
-    const webdavCliServer = await webdavCli.start();
-    // webdavCliServer.on('log', (ctx, fs, path, log) => console.log(log));
-    console.log(webdavCliServer.config);
+    //  console.log(webdavCli.config);
+    await webdavCli.start();
 };
 
 run();

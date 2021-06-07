@@ -51,8 +51,10 @@ const webdav_cli_utils_1 = require("./webdav-cli.utils");
 const webdav_cli_constants_1 = require("./webdav-cli.constants");
 class WebdavCli {
     config;
+    server;
     constructor(config) {
         this.config = this.getConfig(config);
+        this.server = this.init();
     }
     getConfig(config) {
         const selfSignedKey = path_1.join(
@@ -107,7 +109,7 @@ class WebdavCli {
             directory,
         };
     }
-    async start() {
+    init() {
         const config = this.config;
         const userManager = new webdav_server_1.v2.SimpleUserManager();
         const user = userManager.addUser(
@@ -147,7 +149,6 @@ class WebdavCli {
             port: config.port,
             hostname: config.host,
         });
-        server.config = config;
         server.beforeRequest(async (ctx, next) => {
             const { url, headers, method } = ctx.request;
             console.log(">> ", { method, url }, headers);
@@ -168,6 +169,12 @@ class WebdavCli {
             console.log(log);
             next();
         });
+        return server;
+    }
+    async start() {
+        const config = this.config;
+        const { server } = this;
+        console.log(config);
         await server.setFileSystemAsync(
             "/",
             new webdav_server_1.v2.PhysicalFileSystem(config.path),
@@ -183,7 +190,6 @@ class WebdavCli {
             "Run with --help to print help",
         ];
         console.log(logs.join("\n"));
-        return server;
     }
 }
 exports.WebdavCli = WebdavCli;
