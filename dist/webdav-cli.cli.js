@@ -18,7 +18,7 @@ if (argv.help || argv.h) {
             "",
             "options:",
             "  --path       Path to folder [process.cwd()]",
-            "  --host       Host to use [127.0.0.1]",
+            "  --host       Host to use [0.0.0.0]",
             "  --port       Port to use [1900]",
             "  --digest     Enable digest authentication [basic]",
             "  --username   Username for basic/digest authentication [random]",

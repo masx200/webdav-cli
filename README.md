@@ -49,7 +49,7 @@ npx @masx200/webdav-cli --help
 
 options:
   --path       Path to folder [process.cwd()]
-  --host       Host to use [127.0.0.1]
+  --host       Host to use [0.0.0.0]
   --port       Port to use [1900]
   --digest     Enable digest authentication [basic]
   --username   Username for basic/digest authentication [random]
@@ -87,7 +87,7 @@ First, you need to make sure that openssl is installed correctly, and you have `
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
 ```
 
-Use `127.0.0.1` as value for `Common name` if you want to be able to install the certificate in your OS's root certificate store or browser so that it is trusted.
+Use `0.0.0.0` as value for `Common name` if you want to be able to install the certificate in your OS's root certificate store or browser so that it is trusted.
 
 Then you need to run the server with `--ssl` for enabling SSL and `--sslKey=key.pem --sslCert=cert.pem` for your certificate files.
 
