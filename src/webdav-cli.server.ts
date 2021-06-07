@@ -1,13 +1,13 @@
-import * as fs from 'fs';
-import { join } from 'path';
-import { v2 as webdav } from 'webdav-server';
-import { getRandomString } from './webdav-cli.utils';
-import { RIGHTS } from './webdav-cli.constants';
+import * as fs from "fs";
+import { join } from "path";
+import { v2 as webdav } from "webdav-server";
+import { getRandomString } from "./webdav-cli.utils";
+import { RIGHTS } from "./webdav-cli.constants";
 import {
     WebdavCliServer,
     WebdavCliConfig,
     WebdavCliRights,
-} from './webdav-cli.interfaces';
+} from "./webdav-cli.interfaces";
 
 export class WebdavCli {
     config: WebdavCliConfig;
@@ -17,14 +17,14 @@ export class WebdavCli {
     }
 
     getConfig(config: Partial<WebdavCliConfig>): WebdavCliConfig {
-        const selfSignedKey = join(__dirname, '/../certs/self-signed.key.pem');
+        const selfSignedKey = join(__dirname, "/../certs/self-signed.key.pem");
         const selfSignedCert = join(
             __dirname,
-            '/../certs/self-signed.cert.pem',
+            "/../certs/self-signed.cert.pem",
         );
 
         const path = config.path || process.cwd();
-        const host = config.host || '127.0.0.1';
+        const host = config.host || "127.0.0.1";
         const port = config.port || 1900;
 
         const digest = Boolean(config.digest);
@@ -34,23 +34,23 @@ export class WebdavCli {
         const ssl = Boolean(config.ssl);
         const sslKey = ssl
             ? fs.readFileSync(config.sslKey || selfSignedKey).toString()
-            : '';
+            : "";
         const sslCert = ssl
             ? fs.readFileSync(config.sslCert || selfSignedCert).toString()
-            : '';
+            : "";
 
         const disableAuthentication = Boolean(config.disableAuthentication);
 
         if (disableAuthentication) {
-            config.rights = config.rights || ['canRead'];
-            username = '';
-            password = '';
+            config.rights = config.rights || ["canRead"];
+            username = "";
+            password = "";
         }
 
-        const rights = (config.rights || ['all']).filter(
+        const rights = (config.rights || ["all"]).filter(
             (item: WebdavCliRights[number]) => RIGHTS.includes(item),
         );
-        const url = `${ssl ? 'https' : 'http'}://${host}:${port}`;
+        const url = `${ssl ? "https" : "http"}://${host}:${port}`;
         const directory = Boolean(config.directory);
         const autoIndex = Boolean(config.autoIndex);
 
@@ -83,11 +83,11 @@ export class WebdavCli {
         );
 
         const privilegeManager = new webdav.SimplePathPrivilegeManager();
-        privilegeManager.setRights(user, '/', config.rights);
+        privilegeManager.setRights(user, "/", config.rights);
 
         const authentication = config.digest
-            ? 'HTTPDigestAuthentication'
-            : 'HTTPBasicAuthentication';
+            ? "HTTPDigestAuthentication"
+            : "HTTPBasicAuthentication";
 
         const server = new webdav.WebDAVServer({
             httpAuthentication: config.disableAuthentication
@@ -97,7 +97,7 @@ export class WebdavCli {
                           userManager.getDefaultUser((defaultUser) => {
                               privilegeManager.setRights(
                                   defaultUser,
-                                  '/',
+                                  "/",
                                   config.rights,
                               );
                               //@ts-ignore
@@ -105,7 +105,7 @@ export class WebdavCli {
                           });
                       },
                   }
-                : new webdav[authentication](userManager, 'Default realm'),
+                : new webdav[authentication](userManager, "Default realm"),
             privilegeManager: privilegeManager,
             https: config.ssl
                 ? { cert: config.sslCert, key: config.sslKey }
@@ -136,13 +136,13 @@ export class WebdavCli {
         }
       }	      }*/
             const { url, headers, method } = ctx.request;
-            console.log('>> ', { method, url }, headers);
+            console.log(">> ", { method, url }, headers);
             next();
         });
         server.beforeRequest((arg, next) => {
             const { headers, method } = arg.request;
             const { depth } = headers;
-            if (method === 'PROPFIND' && depth !== '0' && depth !== '1') {
+            if (method === "PROPFIND" && depth !== "0" && depth !== "1") {
                 arg.setCode(403);
                 arg.exit();
             } else {
@@ -157,22 +157,22 @@ export class WebdavCli {
         });
 
         await server.setFileSystemAsync(
-            '/',
+            "/",
             new webdav.PhysicalFileSystem(config.path),
         );
         await server.startAsync(config.port);
 
         const logs = [
             `Server running at ${config.url}`,
-            `[rights]: ${config.rights}`,
-            `[digest]: ${config.digest}`,
+            `rights: ${config.rights}`,
+            `digest: ${config.digest}`,
             `username: ${config.username}`,
             `password: ${config.password}`,
-            'Hit CTRL-C to stop the server',
-            'Run with --help to print help',
+            "Hit CTRL-C to stop the server",
+            "Run with --help to print help",
         ];
 
-        console.log(logs.join('\n'));
+        console.log(logs.join("\n"));
 
         return server;
     }

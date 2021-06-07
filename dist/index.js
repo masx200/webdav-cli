@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var __createBinding =
     (this && this.__createBinding) ||
     (Object.create
@@ -20,13 +20,13 @@ var __exportStar =
     function (m, exports) {
         for (var p in m)
             if (
-                p !== 'default' &&
+                p !== "default" &&
                 !Object.prototype.hasOwnProperty.call(exports, p)
             )
                 __createBinding(exports, m, p);
     };
-Object.defineProperty(exports, '__esModule', { value: true });
-__exportStar(require('./webdav-cli.constants'), exports);
-__exportStar(require('./webdav-cli.interfaces'), exports);
-__exportStar(require('./webdav-cli.server'), exports);
-__exportStar(require('./webdav-cli.utils'), exports);
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./webdav-cli.constants"), exports);
+__exportStar(require("./webdav-cli.interfaces"), exports);
+__exportStar(require("./webdav-cli.server"), exports);
+__exportStar(require("./webdav-cli.utils"), exports);

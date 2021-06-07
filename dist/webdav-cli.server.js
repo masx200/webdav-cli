@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var __createBinding =
     (this && this.__createBinding) ||
     (Object.create
@@ -19,13 +19,13 @@ var __setModuleDefault =
     (this && this.__setModuleDefault) ||
     (Object.create
         ? function (o, v) {
-              Object.defineProperty(o, 'default', {
+              Object.defineProperty(o, "default", {
                   enumerable: true,
                   value: v,
               });
           }
         : function (o, v) {
-              o['default'] = v;
+              o["default"] = v;
           });
 var __importStar =
     (this && this.__importStar) ||
@@ -35,20 +35,20 @@ var __importStar =
         if (mod != null)
             for (var k in mod)
                 if (
-                    k !== 'default' &&
+                    k !== "default" &&
                     Object.prototype.hasOwnProperty.call(mod, k)
                 )
                     __createBinding(result, mod, k);
         __setModuleDefault(result, mod);
         return result;
     };
-Object.defineProperty(exports, '__esModule', { value: true });
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebdavCli = void 0;
-const fs = __importStar(require('fs'));
-const path_1 = require('path');
-const webdav_server_1 = require('webdav-server');
-const webdav_cli_utils_1 = require('./webdav-cli.utils');
-const webdav_cli_constants_1 = require('./webdav-cli.constants');
+const fs = __importStar(require("fs"));
+const path_1 = require("path");
+const webdav_server_1 = require("webdav-server");
+const webdav_cli_utils_1 = require("./webdav-cli.utils");
+const webdav_cli_constants_1 = require("./webdav-cli.constants");
 class WebdavCli {
     config;
     constructor(config) {
@@ -57,14 +57,14 @@ class WebdavCli {
     getConfig(config) {
         const selfSignedKey = path_1.join(
             __dirname,
-            '/../certs/self-signed.key.pem',
+            "/../certs/self-signed.key.pem",
         );
         const selfSignedCert = path_1.join(
             __dirname,
-            '/../certs/self-signed.cert.pem',
+            "/../certs/self-signed.cert.pem",
         );
         const path = config.path || process.cwd();
-        const host = config.host || '127.0.0.1';
+        const host = config.host || "127.0.0.1";
         const port = config.port || 1900;
         const digest = Boolean(config.digest);
         let username = (
@@ -76,20 +76,20 @@ class WebdavCli {
         const ssl = Boolean(config.ssl);
         const sslKey = ssl
             ? fs.readFileSync(config.sslKey || selfSignedKey).toString()
-            : '';
+            : "";
         const sslCert = ssl
             ? fs.readFileSync(config.sslCert || selfSignedCert).toString()
-            : '';
+            : "";
         const disableAuthentication = Boolean(config.disableAuthentication);
         if (disableAuthentication) {
-            config.rights = config.rights || ['canRead'];
-            username = '';
-            password = '';
+            config.rights = config.rights || ["canRead"];
+            username = "";
+            password = "";
         }
-        const rights = (config.rights || ['all']).filter((item) =>
+        const rights = (config.rights || ["all"]).filter((item) =>
             webdav_cli_constants_1.RIGHTS.includes(item),
         );
-        const url = `${ssl ? 'https' : 'http'}://${host}:${port}`;
+        const url = `${ssl ? "https" : "http"}://${host}:${port}`;
         const directory = Boolean(config.directory);
         const autoIndex = Boolean(config.autoIndex);
         return {
@@ -119,10 +119,10 @@ class WebdavCli {
         );
         const privilegeManager =
             new webdav_server_1.v2.SimplePathPrivilegeManager();
-        privilegeManager.setRights(user, '/', config.rights);
+        privilegeManager.setRights(user, "/", config.rights);
         const authentication = config.digest
-            ? 'HTTPDigestAuthentication'
-            : 'HTTPBasicAuthentication';
+            ? "HTTPDigestAuthentication"
+            : "HTTPBasicAuthentication";
         const server = new webdav_server_1.v2.WebDAVServer({
             httpAuthentication: config.disableAuthentication
                 ? {
@@ -131,7 +131,7 @@ class WebdavCli {
                           userManager.getDefaultUser((defaultUser) => {
                               privilegeManager.setRights(
                                   defaultUser,
-                                  '/',
+                                  "/",
                                   config.rights,
                               );
                               gotUserCallback(null, defaultUser);
@@ -140,7 +140,7 @@ class WebdavCli {
                   }
                 : new webdav_server_1.v2[authentication](
                       userManager,
-                      'Default realm',
+                      "Default realm",
                   ),
             privilegeManager: privilegeManager,
             https: config.ssl
@@ -152,13 +152,13 @@ class WebdavCli {
         server.config = config;
         server.beforeRequest(async (ctx, next) => {
             const { url, headers, method } = ctx.request;
-            console.log('>> ', { method, url }, headers);
+            console.log(">> ", { method, url }, headers);
             next();
         });
         server.beforeRequest((arg, next) => {
             const { headers, method } = arg.request;
             const { depth } = headers;
-            if (method === 'PROPFIND' && depth !== '0' && depth !== '1') {
+            if (method === "PROPFIND" && depth !== "0" && depth !== "1") {
                 arg.setCode(403);
                 arg.exit();
             } else {
@@ -171,20 +171,20 @@ class WebdavCli {
             next();
         });
         await server.setFileSystemAsync(
-            '/',
+            "/",
             new webdav_server_1.v2.PhysicalFileSystem(config.path),
         );
         await server.startAsync(config.port);
         const logs = [
             `Server running at ${config.url}`,
-            `[rights]: ${config.rights}`,
-            `[digest]: ${config.digest}`,
+            `rights: ${config.rights}`,
+            `digest: ${config.digest}`,
             `username: ${config.username}`,
             `password: ${config.password}`,
-            'Hit CTRL-C to stop the server',
-            'Run with --help to print help',
+            "Hit CTRL-C to stop the server",
+            "Run with --help to print help",
         ];
-        console.log(logs.join('\n'));
+        console.log(logs.join("\n"));
         return server;
     }
 }
