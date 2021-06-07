@@ -55,7 +55,7 @@ options:
   --username   Username for basic/digest authentication [random]
   --password   Password for basic/digest authentication [random]
   --directory  Show directory listings [false]
-  --autoIndex  Display autoIndex [false]
+
   --ssl        Enable https [false]
   --sslKey     Path to ssl key file [self-signed]
   --sslCert    Path to ssl cert file [self-signed]

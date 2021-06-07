@@ -16,7 +16,6 @@ export interface WebdavCliConfig {
     disableAuthentication?: boolean;
     url?: string;
     directory?: boolean;
-    autoIndex?: boolean;
 }
 
 export interface WebdavCliServer extends webdav.WebDAVServer {

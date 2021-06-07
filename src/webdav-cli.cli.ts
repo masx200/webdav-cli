@@ -25,7 +25,7 @@ if (argv.help || argv.h) {
             "  --username   Username for basic/digest authentication [random]",
             "  --password   Password for basic/digest authentication [random]",
             "  --directory  Show directory listings [false]",
-            "  --autoIndex  Display autoIndex [false]",
+
             "  --ssl        Enable https [false]",
             "  --sslKey     Path to ssl key file [self-signed]",
             "  --sslCert    Path to ssl cert file [self-signed]",
@@ -54,7 +54,7 @@ if (argv.help || argv.h) {
     process.exit();
 }
 
-if (argv.version) {
+if (argv.version || argv.v) {
     console.log("Version: " + require("../package.json").version, "\n");
     process.exit();
 }
@@ -75,7 +75,7 @@ const config = {
     username: argv.username || process.env.WEBDAV_CLI_USERNAME,
     password: argv.password || process.env.WEBDAV_CLI_PASSWORD,
     directory: argv.directory || process.env.WEBDAV_CLI_DIRECTORY,
-    autoIndex: argv.autoIndex || process.env.WEBDAV_CLI_AUTO_INDEX,
+
     ssl: argv.ssl || Boolean(process.env.WEBDAV_CLI_SSL),
     sslKey: argv.sslKey || process.env.WEBDAV_CLI_SSL_KEY,
     sslCert: argv.sslCert || process.env.WEBDAV_CLI_SSL_CERT,

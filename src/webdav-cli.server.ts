@@ -52,7 +52,6 @@ export class WebdavCli {
         );
         const url = `${ssl ? "https" : "http"}://${host}:${port}`;
         const directory = Boolean(config.directory);
-        const autoIndex = Boolean(config.autoIndex);
 
         return {
             host,
@@ -68,7 +67,6 @@ export class WebdavCli {
             url,
             disableAuthentication,
             directory,
-            autoIndex,
         };
     }
 
@@ -124,7 +122,7 @@ export class WebdavCli {
           const list = await resource.readDirAsync();	            const resource = await server.getResourceAsync(ctx, ctx.requested.uri);
           const uri = ctx.requested.uri.slice(-1) === '/' ? ctx.requested.uri : ctx.requested.uri + '/';	            const list = await resource.readDirAsync();
           const up =  `<a href="${ uri.split('/').slice(0, -2).join('/') || '/' }">..</a><br/>`;	            const uri = ctx.requested.uri.slice(-1) === '/' ? ctx.requested.uri : ctx.requested.uri + '/';
-          const html = up + list.map(item => `<a href="${ uri + item }">${ item }</a><br/>`).join('');	            if(config.autoIndex && list.includes('index.html')) {
+     
           ctx.response.setHeader('Content-Type', 'text/html');	              ctx.requested.path = `${uri}index.html` as any;
           ctx.response.end(html);	            } else {
         } catch {}	              const up =  `<a href="${ uri.split('/').slice(0, -2).join('/') || '/' }">..</a><br/>`;

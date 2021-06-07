@@ -4,7 +4,7 @@
         "registry": "https://registry.npmjs.com"
     },
     "name": "@masx200/webdav-cli",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "A simple zero-configuration command-line webdav server",
     "license": "MIT",
     "keywords": [
@@ -44,9 +44,6 @@
         "typescript": "^4.3.2"
     },
     "dependencies": {
-        "chalk": "^4.1.1",
-        "figlet": "^1.5.0",
-        "ini": "2.0.0",
         "minimist": "^1.2.5",
         "webdav-server": "^2.6.2"
     },
