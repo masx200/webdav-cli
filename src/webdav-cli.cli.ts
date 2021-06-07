@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import process from 'process'
 import * as chalk from 'chalk';
 import * as figlet from 'figlet';
 import * as minimist from 'minimist';
@@ -94,3 +94,6 @@ const run = async () => {
 };
 
 run();
+process.on('unhandledRejection', (e) => {
+    console.error(e)
+})
