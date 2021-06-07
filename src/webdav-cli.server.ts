@@ -1,4 +1,6 @@
-import * as fs from "fs";
+import http from "http";
+import https from "https";
+import fs from "fs";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
 import { getRandomString } from "./webdav-cli.utils";
@@ -165,8 +167,6 @@ export class WebdavCli {
             "/",
             new webdav.PhysicalFileSystem(config.path),
         );
-        await server.startAsync(config.port);
-
         const logs = [
             `Server running at ${config.url}`,
             `rights: ${config.rights}`,
@@ -178,5 +178,41 @@ export class WebdavCli {
         ];
 
         console.log(logs.join("\n"));
+        let rawhttpserver: http.Server | https.Server | undefined = undefined;
+
+        Object.defineProperty(server, "server", {
+            get() {
+                return rawhttpserver;
+            },
+            set(v) {
+                rawhttpserver = v;
+                if (!rawhttpserver) {
+                    return;
+                }
+                rawhttpserver.on("error", (err) => {
+                    if (err.code === "EADDRINUSE") {
+                        console.error(err);
+                        rawhttpserver?.listen(
+                            Math.round(Math.random() * 65535),
+                        );
+                        return;
+                    } else {
+                        throw err;
+                    }
+                });
+                rawhttpserver.on("listening", () => {
+                    console.log(
+                        `Server listening on ` +
+                            JSON.stringify(rawhttpserver?.address()),
+                    );
+                });
+
+                return;
+            },
+            enumerable: true,
+            configurable: true,
+        });
+
+        await server.startAsync(config.port);
     }
 }

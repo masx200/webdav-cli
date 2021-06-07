@@ -1,50 +1,12 @@
 "use strict";
-var __createBinding =
-    (this && this.__createBinding) ||
-    (Object.create
-        ? function (o, m, k, k2) {
-              if (k2 === undefined) k2 = k;
-              Object.defineProperty(o, k2, {
-                  enumerable: true,
-                  get: function () {
-                      return m[k];
-                  },
-              });
-          }
-        : function (o, m, k, k2) {
-              if (k2 === undefined) k2 = k;
-              o[k2] = m[k];
-          });
-var __setModuleDefault =
-    (this && this.__setModuleDefault) ||
-    (Object.create
-        ? function (o, v) {
-              Object.defineProperty(o, "default", {
-                  enumerable: true,
-                  value: v,
-              });
-          }
-        : function (o, v) {
-              o["default"] = v;
-          });
-var __importStar =
-    (this && this.__importStar) ||
+var __importDefault =
+    (this && this.__importDefault) ||
     function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null)
-            for (var k in mod)
-                if (
-                    k !== "default" &&
-                    Object.prototype.hasOwnProperty.call(mod, k)
-                )
-                    __createBinding(result, mod, k);
-        __setModuleDefault(result, mod);
-        return result;
+        return mod && mod.__esModule ? mod : { default: mod };
     };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebdavCli = void 0;
-const fs = __importStar(require("fs"));
+const fs_1 = __importDefault(require("fs"));
 const path_1 = require("path");
 const webdav_server_1 = require("webdav-server");
 const webdav_cli_utils_1 = require("./webdav-cli.utils");
@@ -77,10 +39,14 @@ class WebdavCli {
         ).toString();
         const ssl = Boolean(config.ssl);
         const sslKey = ssl
-            ? fs.readFileSync(config.sslKey || selfSignedKey).toString()
+            ? fs_1.default
+                  .readFileSync(config.sslKey || selfSignedKey)
+                  .toString()
             : "";
         const sslCert = ssl
-            ? fs.readFileSync(config.sslCert || selfSignedCert).toString()
+            ? fs_1.default
+                  .readFileSync(config.sslCert || selfSignedCert)
+                  .toString()
             : "";
         const disableAuthentication = Boolean(config.disableAuthentication);
         if (disableAuthentication) {
@@ -179,7 +145,6 @@ class WebdavCli {
             "/",
             new webdav_server_1.v2.PhysicalFileSystem(config.path),
         );
-        await server.startAsync(config.port);
         const logs = [
             `Server running at ${config.url}`,
             `rights: ${config.rights}`,
@@ -190,6 +155,39 @@ class WebdavCli {
             "Run with --help to print help",
         ];
         console.log(logs.join("\n"));
+        let rawhttpserver = undefined;
+        Object.defineProperty(server, "server", {
+            get() {
+                return rawhttpserver;
+            },
+            set(v) {
+                rawhttpserver = v;
+                if (!rawhttpserver) {
+                    return;
+                }
+                rawhttpserver.on("error", (err) => {
+                    if (err.code === "EADDRINUSE") {
+                        console.error(err);
+                        rawhttpserver?.listen(
+                            Math.round(Math.random() * 65535),
+                        );
+                        return;
+                    } else {
+                        throw err;
+                    }
+                });
+                rawhttpserver.on("listening", () => {
+                    console.log(
+                        `Server listening on ` +
+                            JSON.stringify(rawhttpserver?.address()),
+                    );
+                });
+                return;
+            },
+            enumerable: true,
+            configurable: true,
+        });
+        await server.startAsync(config.port);
     }
 }
 exports.WebdavCli = WebdavCli;
