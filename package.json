@@ -21,7 +21,7 @@
     "scripts": {
         "start": "node ./dist/webdav-cli.cli.js --username root --password root",
         "build": " tsc -p tsconfig.build.json",
-        "format": "prettier --write \"**/*.ts\" **/*.js *.json *.md",
+        "format": "prettier --write \"**/*.ts\" **/*.js *.json *.md"
     },
     "devDependencies": {
         "@types/figlet": "^1.5.1",
