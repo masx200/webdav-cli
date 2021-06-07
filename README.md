@@ -4,12 +4,9 @@ forked from svtslv/webdav-cli
 
 https://github.com/svtslv/webdav-cli
 
-
 Optimized a problem
 
-
 https://github.com/OpenMarshal/npm-WebDAV-Server/issues/84
-
 
 ## Table of Contents
 

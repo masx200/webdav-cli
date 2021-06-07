@@ -47,9 +47,9 @@ export class WebdavCli {
             password = '';
         }
 
-        const rights = (
-            config.rights || ['all']
-        ).filter((item: WebdavCliRights[number]) => RIGHTS.includes(item));
+        const rights = (config.rights || ['all']).filter(
+            (item: WebdavCliRights[number]) => RIGHTS.includes(item),
+        );
         const url = `${ssl ? 'https' : 'http'}://${host}:${port}`;
         const directory = Boolean(config.directory);
         const autoIndex = Boolean(config.autoIndex);
@@ -136,7 +136,7 @@ export class WebdavCli {
         }
       }	      }*/
             const { url, headers, method } = ctx.request;
-            console.log(">> ",{ method, url }, headers);
+            console.log('>> ', { method, url }, headers);
             next();
         });
         server.beforeRequest((arg, next) => {

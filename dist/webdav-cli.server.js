@@ -73,7 +73,8 @@ class WebdavCli {
             config.password,
             false,
         );
-        const privilegeManager = new webdav_server_1.v2.SimplePathPrivilegeManager();
+        const privilegeManager =
+            new webdav_server_1.v2.SimplePathPrivilegeManager();
         privilegeManager.setRights(user, '/', config.rights);
         const authentication = config.digest
             ? 'HTTPDigestAuthentication'
