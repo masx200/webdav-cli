@@ -1,15 +1,11 @@
+import fs from "fs";
 import http from "http";
 import https from "https";
-import fs from "fs";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
-import { getRandomString } from "./webdav-cli.utils";
 import { RIGHTS } from "./webdav-cli.constants";
-import {
-    WebdavCliServer,
-    WebdavCliConfig,
-    WebdavCliRights,
-} from "./webdav-cli.interfaces";
+import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
+import { getRandomString } from "./webdav-cli.utils";
 
 export class WebdavCli {
     config: WebdavCliConfig;
@@ -115,27 +111,7 @@ export class WebdavCli {
             hostname: config.host,
         });
 
-        //  server.config = config;
-
         server.beforeRequest(async (ctx, next) => {
-            /*  if (config.directory) {
-      if(isBrowser) {	        const isBrowser = ctx.request.headers['user-agent'].search('Mozilla/5.0') !== -1;
-        try {	        if(isBrowser) {
-          const resource = await server.getResourceAsync(ctx, ctx.requested.uri);	          try {
-          const list = await resource.readDirAsync();	            const resource = await server.getResourceAsync(ctx, ctx.requested.uri);
-          const uri = ctx.requested.uri.slice(-1) === '/' ? ctx.requested.uri : ctx.requested.uri + '/';	            const list = await resource.readDirAsync();
-          const up =  `<a href="${ uri.split('/').slice(0, -2).join('/') || '/' }">..</a><br/>`;	            const uri = ctx.requested.uri.slice(-1) === '/' ? ctx.requested.uri : ctx.requested.uri + '/';
-     
-          ctx.response.setHeader('Content-Type', 'text/html');	              ctx.requested.path = `${uri}index.html` as any;
-          ctx.response.end(html);	            } else {
-        } catch {}	              const up =  `<a href="${ uri.split('/').slice(0, -2).join('/') || '/' }">..</a><br/>`;
-              const html = up + list.map(item => `<a href="${ uri + item }">${ item }</a><br/>`).join('');
-              // ctx.response.setHeader('Content-Type', 'text/html;charset=UTF-8');
-              ctx.response.end(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
-            }
-          } catch {}
-        }
-      }	      }*/
             const { url, headers, method } = ctx.request;
             console.log(">> ", { method, url }, headers);
             next();
