@@ -131,7 +131,7 @@ class WebdavCli {
             }
         });
         server.afterRequest((arg, next) => {
-            const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} ${arg.response.statusMessage}`;
+            const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} `;
             console.log(log);
             next();
         });
@@ -140,7 +140,13 @@ class WebdavCli {
     async start() {
         const config = this.config;
         const { server } = this;
-        console.log(config);
+        console.log(
+            Object.fromEntries(
+                Object.entries(config).filter(([key]) => {
+                    return !["sslKey", "sslCert"].includes(key);
+                }),
+            ),
+        );
         await server.setFileSystemAsync(
             "/",
             new webdav_server_1.v2.PhysicalFileSystem(config.path),

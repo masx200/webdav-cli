@@ -118,24 +118,6 @@ export class WebdavCli {
         //  server.config = config;
 
         server.beforeRequest(async (ctx, next) => {
-            /*  if (config.directory) {
-      if(isBrowser) {	        const isBrowser = ctx.request.headers['user-agent'].search('Mozilla/5.0') !== -1;
-        try {	        if(isBrowser) {
-          const resource = await server.getResourceAsync(ctx, ctx.requested.uri);	          try {
-          const list = await resource.readDirAsync();	            const resource = await server.getResourceAsync(ctx, ctx.requested.uri);
-          const uri = ctx.requested.uri.slice(-1) === '/' ? ctx.requested.uri : ctx.requested.uri + '/';	            const list = await resource.readDirAsync();
-          const up =  `<a href="${ uri.split('/').slice(0, -2).join('/') || '/' }">..</a><br/>`;	            const uri = ctx.requested.uri.slice(-1) === '/' ? ctx.requested.uri : ctx.requested.uri + '/';
-     
-          ctx.response.setHeader('Content-Type', 'text/html');	              ctx.requested.path = `${uri}index.html` as any;
-          ctx.response.end(html);	            } else {
-        } catch {}	              const up =  `<a href="${ uri.split('/').slice(0, -2).join('/') || '/' }">..</a><br/>`;
-              const html = up + list.map(item => `<a href="${ uri + item }">${ item }</a><br/>`).join('');
-              // ctx.response.setHeader('Content-Type', 'text/html;charset=UTF-8');
-              ctx.response.end(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
-            }
-          } catch {}
-        }
-      }	      }*/
             const { url, headers, method } = ctx.request;
             console.log(">> ", { method, url }, headers);
             next();
@@ -151,7 +133,7 @@ export class WebdavCli {
             }
         });
         server.afterRequest((arg, next) => {
-            const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} ${arg.response.statusMessage}`;
+            const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} `;
             // server.emit('log', null, null, '/', log);
             console.log(log);
             next();
@@ -162,7 +144,13 @@ export class WebdavCli {
     async start() {
         const config = this.config;
         const { server } = this;
-        console.log(config);
+        console.log(
+            Object.fromEntries(
+                Object.entries(config).filter(([key]) => {
+                    return !["sslKey", "sslCert"].includes(key);
+                }),
+            ),
+        );
         await server.setFileSystemAsync(
             "/",
             new webdav.PhysicalFileSystem(config.path),
