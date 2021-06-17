@@ -2,9 +2,11 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/etag': ^1.8.0
+  '@types/fresh': ^0.5.0
   '@types/minimist': ^1.2.1
   '@types/node': ^15.12.2
   etag: ^1.8.1
+  fresh: ^0.5.2
   hosted-git-info: 4.0.2
   minimist: ^1.2.5
   prettier: ^2.3.1
@@ -15,11 +17,13 @@ specifiers:
 
 dependencies:
   etag: 1.8.1
+  fresh: 0.5.2
   minimist: 1.2.5
   webdav-server: 2.6.2
 
 devDependencies:
   '@types/etag': 1.8.0
+  '@types/fresh': 0.5.0
   '@types/minimist': 1.2.1
   '@types/node': 15.12.2
   hosted-git-info: 4.0.2
@@ -36,6 +40,10 @@ packages:
       '@types/node': 15.12.2
     dev: true
 
+  /@types/fresh/0.5.0:
+    resolution: {integrity: sha512-eGPzuyc6wZM3sSHJdF7NM2jW6B/xsB014Rqg/iDa6xY02mlfy1w/TE2sYhR8vbHxkzJOXiGo6NuIk3xk35vsgQ==}
+    dev: true
+
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
     dev: true
@@ -50,6 +58,11 @@ packages:
 
   /etag/1.8.1:
     resolution: {integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /fresh/0.5.2:
+    resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
     engines: {node: '>= 0.6'}
     dev: false
 

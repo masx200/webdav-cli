@@ -9,8 +9,11 @@ exports.etag_conditional_get = void 0;
 const etag_1 = __importDefault(require("etag"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const fresh_1 = __importDefault(require("fresh"));
 function etag_conditional_get(publicpath) {
     return function middleware(ctx, next) {
+        const { request, response } = ctx;
+        const [req, res] = [request, response];
         if (
             ctx.request.method &&
             !["GET", "HEAD"].includes(ctx.request.method)
@@ -32,11 +35,7 @@ function etag_conditional_get(publicpath) {
                 );
             }
         }
-        if (
-            ctx.response.hasHeader("etag") &&
-            ctx.request.headers["if-none-match"] ===
-                ctx.response.getHeader("etag")
-        ) {
+        if (isFresh(req, res)) {
             ctx.response.statusCode = 304;
             ctx.response.end();
             ctx.exit();
@@ -46,3 +45,9 @@ function etag_conditional_get(publicpath) {
     };
 }
 exports.etag_conditional_get = etag_conditional_get;
+function isFresh(req, res) {
+    return fresh_1.default(req.headers, {
+        etag: res.getHeader("ETag"),
+        "last-modified": res.getHeader("Last-Modified"),
+    });
+}
