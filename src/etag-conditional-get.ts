@@ -27,8 +27,9 @@ export function etag_conditional_get(publicpath: string) {
             }
         }
         if (
+            ctx.response.hasHeader("etag") &&
             ctx.request.headers["if-none-match"] ===
-            ctx.response.getHeader("etag")
+                ctx.response.getHeader("etag")
         ) {
             ctx.response.statusCode = 304;
             ctx.response.end();
