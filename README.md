@@ -14,6 +14,8 @@ A simple zero-configuration command-line webdav server
 
 给 webdav 服务器加上了 etag 头部和条件请求的功能
 
+支持范围请求，跨域访问，
+
 ## Installation
 
 #### Globally via yarn
