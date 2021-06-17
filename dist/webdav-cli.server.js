@@ -89,7 +89,7 @@ class WebdavCli {
         const authentication = config.digest
             ? "HTTPDigestAuthentication"
             : "HTTPBasicAuthentication";
-        const server = new webdav_server_1.v2.WebDAVServer({
+        const options = {
             httpAuthentication: config.disableAuthentication
                 ? {
                       askForAuthentication: () => ({}),
@@ -109,12 +109,15 @@ class WebdavCli {
                       "Default realm",
                   ),
             privilegeManager: privilegeManager,
-            https: config.ssl
-                ? { cert: config.sslCert, key: config.sslKey }
-                : undefined,
             port: config.port,
             hostname: config.host,
-        });
+        };
+        config.ssl &&
+            Reflect.set(options, "https", {
+                cert: config.sslCert,
+                key: config.sslKey,
+            });
+        const server = new webdav_server_1.v2.WebDAVServer(options);
         server.beforeRequest(async (ctx, next) => {
             const { url, headers, method } = ctx.request;
             console.log(">> ", method, url, headers);

@@ -85,12 +85,17 @@ export class WebdavCli {
         const authentication = config.digest
             ? "HTTPDigestAuthentication"
             : "HTTPBasicAuthentication";
-
-        const server = new webdav.WebDAVServer({
+        const options = {
             httpAuthentication: config.disableAuthentication
                 ? {
                       askForAuthentication: () => ({}),
-                      getUser: (ctx, gotUserCallback) => {
+                      getUser: (
+                          ctx: any,
+                          gotUserCallback: (
+                              arg0: Error,
+                              arg1: webdav.IUser,
+                          ) => void,
+                      ) => {
                           userManager.getDefaultUser((defaultUser) => {
                               privilegeManager.setRights(
                                   defaultUser,
@@ -104,12 +109,18 @@ export class WebdavCli {
                   }
                 : new webdav[authentication](userManager, "Default realm"),
             privilegeManager: privilegeManager,
-            https: config.ssl
-                ? { cert: config.sslCert, key: config.sslKey }
-                : undefined,
+            // https: config.ssl
+            //     ? { cert: config.sslCert, key: config.sslKey }
+            //     : undefined,
             port: config.port,
             hostname: config.host,
-        });
+        };
+        config.ssl &&
+            Reflect.set(options, "https", {
+                cert: config.sslCert,
+                key: config.sslKey,
+            });
+        const server = new webdav.WebDAVServer(options);
 
         server.beforeRequest(async (ctx, next) => {
             const { url, headers, method } = ctx.request;
