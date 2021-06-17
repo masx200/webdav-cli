@@ -1,15 +1,11 @@
+import fs from "fs";
 import http from "http";
 import https from "https";
-import fs from "fs";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
-import { getRandomString } from "./webdav-cli.utils";
 import { RIGHTS } from "./webdav-cli.constants";
-import {
-    WebdavCliServer,
-    WebdavCliConfig,
-    WebdavCliRights,
-} from "./webdav-cli.interfaces";
+import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
+import { getRandomString } from "./webdav-cli.utils";
 
 export class WebdavCli {
     config: WebdavCliConfig;
@@ -114,8 +110,6 @@ export class WebdavCli {
             port: config.port,
             hostname: config.host,
         });
-
-        //  server.config = config;
 
         server.beforeRequest(async (ctx, next) => {
             const { url, headers, method } = ctx.request;

@@ -1,16 +1,12 @@
 #!/usr/bin/env node
 import process from "process";
-// import chalk from 'chalk';
-// import figlet from 'figlet';
+
 import minimist from "minimist";
 import { WebdavCli } from "./webdav-cli.server";
 // import { HOMEPAGE } from './webdav-cli.constants';
 
 const argv = minimist(process.argv.slice(2));
-// console.log(
-//     chalk.green(figlet.textSync('webdav-cli', { horizontalLayout: 'full' })),
-// );
-// console.log(chalk.green(`Homepage: ${HOMEPAGE}\n`));
+
 console.log("webdav-cli");
 if (argv.help || argv.h) {
     console.log(
