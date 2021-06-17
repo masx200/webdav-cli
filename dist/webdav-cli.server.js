@@ -9,6 +9,7 @@ exports.WebdavCli = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = require("path");
 const webdav_server_1 = require("webdav-server");
+const etag_conditional_get_1 = require("./etag-conditional-get");
 const webdav_cli_constants_1 = require("./webdav-cli.constants");
 const webdav_cli_utils_1 = require("./webdav-cli.utils");
 class WebdavCli {
@@ -133,6 +134,9 @@ class WebdavCli {
                 next();
             }
         });
+        server.beforeRequest(
+            etag_conditional_get_1.etag_conditional_get(config.path),
+        );
         server.afterRequest((arg, next) => {
             const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} `;
             console.log(log);

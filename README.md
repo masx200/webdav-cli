@@ -8,21 +8,11 @@ Optimized a problem
 
 https://github.com/OpenMarshal/npm-WebDAV-Server/issues/84
 
-## Table of Contents
-
--   [WebDAV CLI](#webdav-cli)
-    -   [Table of Contents](#table-of-contents)
-    -   [Description](#description)
-    -   [Installation](#installation)
-        -   [Globally via yarn](#globally-via-yarn)
-        -   [Running on-demand:](#running-on-demand)
-    -   [Examples](#examples)
-    -   [TLS/SSL](#tlsssl)
-    -   [License](#license)
-
 ## Description
 
 A simple zero-configuration command-line webdav server
+
+给 webdav 服务器加上了 etag 头部和条件请求的功能
 
 ## Installation
 

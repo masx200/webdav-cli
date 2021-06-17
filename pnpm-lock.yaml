@@ -1,8 +1,10 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@types/etag': ^1.8.0
   '@types/minimist': ^1.2.1
   '@types/node': ^15.12.2
+  etag: ^1.8.1
   hosted-git-info: 4.0.2
   minimist: ^1.2.5
   prettier: ^2.3.1
@@ -12,10 +14,12 @@ specifiers:
   webdav-server: ^2.6.2
 
 dependencies:
+  etag: 1.8.1
   minimist: 1.2.5
   webdav-server: 2.6.2
 
 devDependencies:
+  '@types/etag': 1.8.0
   '@types/minimist': 1.2.1
   '@types/node': 15.12.2
   hosted-git-info: 4.0.2
@@ -25,6 +29,12 @@ devDependencies:
   typescript: 4.3.2
 
 packages:
+
+  /@types/etag/1.8.0:
+    resolution: {integrity: sha512-EdSN0x+Y0/lBv7YAb8IU4Jgm6DWM+Bqtz7o5qozl96fzaqdqbdfHS5qjdpFeIv7xQ8jSLyjMMNShgYtMajEHyQ==}
+    dependencies:
+      '@types/node': 15.12.2
+    dev: true
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
@@ -37,6 +47,11 @@ packages:
   /@types/node/15.12.2:
     resolution: {integrity: sha512-zjQ69G564OCIWIOHSXyQEEDpdpGl+G348RAKY0XXy9Z5kU9Vzv1GMNnkar/ZJ8dzXB3COzD9Mo9NtRZ4xfgUww==}
     dev: true
+
+  /etag/1.8.1:
+    resolution: {integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=}
+    engines: {node: '>= 0.6'}
+    dev: false
 
   /hosted-git-info/4.0.2:
     resolution: {integrity: sha512-c9OGXbZ3guC/xOlCg1Ci/VgWlwsqDv1yMQL1CWqXDL0hDjXuNcq0zuR4xqPSuasI3kqFDhqSyTjREz5gzq0fXg==}

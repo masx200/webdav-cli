@@ -3,6 +3,7 @@ import http from "http";
 import https from "https";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
+import { etag_conditional_get } from "./etag-conditional-get";
 import { RIGHTS } from "./webdav-cli.constants";
 import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
 import { getRandomString } from "./webdav-cli.utils";
@@ -127,6 +128,7 @@ export class WebdavCli {
             console.log(">> ", method, url, headers);
             next();
         });
+
         server.beforeRequest((arg, next) => {
             const { headers, method } = arg.request;
             const { depth } = headers;
@@ -137,6 +139,7 @@ export class WebdavCli {
                 next();
             }
         });
+        server.beforeRequest(etag_conditional_get(config.path));
         server.afterRequest((arg, next) => {
             const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} `;
             // server.emit('log', null, null, '/', log);
