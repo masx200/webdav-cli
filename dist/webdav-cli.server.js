@@ -9,6 +9,7 @@ exports.WebdavCli = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = require("path");
 const webdav_server_1 = require("webdav-server");
+const http_auth_1 = require("./http-auth");
 const koa_etag_conditional_get_1 = require("./koa-etag-conditional-get");
 const webdav_cli_constants_1 = require("./webdav-cli.constants");
 const webdav_cli_utils_1 = require("./webdav-cli.utils");
@@ -116,6 +117,15 @@ class WebdavCli {
             console.log(">> ", method, url, headers);
             next();
         });
+        if (!config.disableAuthentication) {
+            server.beforeRequest(
+                http_auth_1.createhttpauth({
+                    user: config.username,
+                    pass: config.password,
+                    authentication,
+                }),
+            );
+        }
         server.beforeRequest((arg, next) => {
             const { headers, method } = arg.request;
             const { depth } = headers;
