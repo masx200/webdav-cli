@@ -85,29 +85,32 @@ export class WebdavCli {
             ? "HTTPDigestAuthentication"
             : "HTTPBasicAuthentication";
         const options = {
-            httpAuthentication: config.disableAuthentication
-                ? {
-                      askForAuthentication: () => ({}),
-                      getUser: (
-                          ctx: any,
-                          gotUserCallback: (
-                              arg0: Error,
-                              arg1: webdav.IUser,
-                          ) => void,
-                      ) => {
-                          userManager.getDefaultUser((defaultUser) => {
-                              privilegeManager.setRights(
-                                  defaultUser,
-                                  "/",
-                                  config.rights,
-                              );
-                              //@ts-ignore
-                              gotUserCallback(null, defaultUser);
-                          });
-                      },
-                  }
-                : new webdav[authentication](userManager, "Default realm"),
-            privilegeManager: privilegeManager,
+            httpAuthentication:
+                // config.disableAuthentication
+                // ?
+                {
+                    askForAuthentication: () => ({}),
+                    getUser: (
+                        ctx: any,
+                        gotUserCallback: (
+                            arg0: Error,
+                            arg1: webdav.IUser,
+                        ) => void,
+                    ) => {
+                        userManager.getDefaultUser((defaultUser) => {
+                            privilegeManager.setRights(
+                                defaultUser,
+                                "/",
+                                config.rights,
+                            );
+                            //@ts-ignore
+                            gotUserCallback(null, defaultUser);
+                        });
+                    },
+                },
+            //     :
+            //     new webdav[authentication](userManager, "Default realm"),
+            // privilegeManager: privilegeManager,
             // https: config.ssl
             //     ? { cert: config.sslCert, key: config.sslKey }
             //     : undefined,
