@@ -3,7 +3,7 @@ import http from "http";
 import https from "https";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
-import { etag_conditional_get } from "./etag-conditional-get";
+import { etag_conditional_get } from "./koa-etag-conditional-get";
 import { RIGHTS } from "./webdav-cli.constants";
 import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
 import { getRandomString } from "./webdav-cli.utils";
