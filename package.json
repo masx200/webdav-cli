@@ -26,6 +26,7 @@
     "devDependencies": {
         "@types/etag": "^1.8.0",
         "@types/fresh": "^0.5.0",
+        "@types/http-auth": "^4.1.0",
         "@types/koa": "^2.13.3",
         "@types/koa-compress": "^4.0.1",
         "@types/koa-conditional-get": "^2.0.0",

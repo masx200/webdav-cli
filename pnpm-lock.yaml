@@ -5,6 +5,7 @@ specifiers:
   '@masx200/koa-stream-etag': ^5.0.3
   '@types/etag': ^1.8.0
   '@types/fresh': ^0.5.0
+  '@types/http-auth': ^4.1.0
   '@types/koa': ^2.13.3
   '@types/koa-compress': ^4.0.1
   '@types/koa-conditional-get': ^2.0.0
@@ -54,6 +55,7 @@ dependencies:
 devDependencies:
   '@types/etag': 1.8.0
   '@types/fresh': 0.5.0
+  '@types/http-auth': 4.1.0
   '@types/koa': 2.13.3
   '@types/koa-compress': 4.0.1
   '@types/koa-conditional-get': 2.0.0
@@ -146,6 +148,12 @@ packages:
 
   /@types/http-assert/1.5.1:
     resolution: {integrity: sha512-PGAK759pxyfXE78NbKxyfRcWYA/KwW17X290cNev/qAsn9eQIxkH4shoNBafH37wewhDG/0p1cHPbK6+SzZjWQ==}
+    dev: true
+
+  /@types/http-auth/4.1.0:
+    resolution: {integrity: sha512-z9g4wh4RD5BabDAun3nWglJirtoNBn4L0K8ayFNww9agMUivg3NKx50mY19u7D/mF6NvovWxvM3NtsqEqSgGTA==}
+    dependencies:
+      '@types/node': 15.12.2
     dev: true
 
   /@types/http-errors/1.8.0:
