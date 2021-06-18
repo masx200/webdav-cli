@@ -3,6 +3,7 @@ import http from "http";
 import https from "https";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
+import { createhttpauth } from "./http-auth";
 import { etag_conditional_get } from "./koa-etag-conditional-get";
 import { RIGHTS } from "./webdav-cli.constants";
 import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
@@ -129,7 +130,15 @@ export class WebdavCli {
             console.log(">> ", method, url, headers);
             next();
         });
-
+        if (!config.disableAuthentication) {
+            server.beforeRequest(
+                createhttpauth({
+                    user: config.username,
+                    pass: config.password,
+                    authentication,
+                }),
+            );
+        }
         server.beforeRequest((arg, next) => {
             const { headers, method } = arg.request;
             const { depth } = headers;
