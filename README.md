@@ -18,6 +18,8 @@ A simple zero-configuration command-line webdav server
 
 支持在浏览器中展示文件夹内容了，使用"koa2-serve-index"
 
+如果请求方法是"GET"或者"HEAD"，交给"koa"服务器处理，提供静态文件
+
 ## Installation
 
 #### Globally via yarn
