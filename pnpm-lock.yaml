@@ -18,6 +18,7 @@ specifiers:
   etag: ^1.8.1
   fresh: ^0.5.2
   hosted-git-info: 4.0.2
+  http-auth: ^4.1.5
   koa: ^2.13.1
   koa-compress: ^5.0.1
   koa-conditional-get: ^3.0.0
@@ -38,6 +39,7 @@ dependencies:
   '@masx200/koa-stream-etag': 5.0.3
   etag: 1.8.1
   fresh: 0.5.2
+  http-auth: 4.1.5
   koa: 2.13.1
   koa-compress: 5.0.1
   koa-conditional-get: 3.0.0
@@ -274,6 +276,22 @@ packages:
     resolution: {integrity: sha1-q8av7tzqUugJzcA3au0845Y10X8=}
     dev: false
 
+  /apache-crypt/1.2.4:
+    resolution: {integrity: sha512-Icze5ny5W5uv3xgMgl8U+iGmRCC0iIDrb2PVPuRBtL3Zy1Y5TMewXP1Vtc4r5X9eNNBEk7KYPu0Qby9m/PmcHg==}
+    engines: {node: '>=8'}
+    dependencies:
+      unix-crypt-td-js: 1.1.4
+    dev: false
+
+  /apache-md5/1.1.5:
+    resolution: {integrity: sha512-sbLEIMQrkV7RkIruqTPXxeCMkAAycv4yzTkBzRgOR1BrR5UB7qZtupqxkersTJSf0HZ3sbaNRrNV80TnnM7cUw==}
+    engines: {node: '>=8'}
+    dev: false
+
+  /bcryptjs/2.4.3:
+    resolution: {integrity: sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=}
+    dev: false
+
   /bluebird/3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
     dev: false
@@ -440,6 +458,16 @@ packages:
     dependencies:
       deep-equal: 1.0.1
       http-errors: 1.7.3
+    dev: false
+
+  /http-auth/4.1.5:
+    resolution: {integrity: sha512-FVzE7P4d9iIrkMPs0Nb8once1qjo1ki/C/pKLW9+ehdQQdbdHYGc+LpVzss5tRcKPkNrvnPmKZ8bygeYX9fdew==}
+    engines: {node: '>=8'}
+    dependencies:
+      apache-crypt: 1.2.4
+      apache-md5: 1.1.5
+      bcryptjs: 2.4.3
+      uuid: 3.4.0
     dev: false
 
   /http-errors/1.5.1:
@@ -838,6 +866,16 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
+
+  /unix-crypt-td-js/1.1.4:
+    resolution: {integrity: sha512-8rMeVYWSIyccIJscb9NdCfZKSRBKYTeVnwmiRYT2ulE3qd1RaDQ0xQDP+rI3ccIWbhu/zuo5cgN8z73belNZgw==}
+    dev: false
+
+  /uuid/3.4.0:
+    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    hasBin: true
+    dev: false
 
   /vary/1.1.2:
     resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
