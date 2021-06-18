@@ -12,13 +12,15 @@ https://github.com/OpenMarshal/npm-WebDAV-Server/issues/84
 
 A simple zero-configuration command-line webdav server
 
-给 webdav 服务器加上了 etag 头部和条件请求的功能
+给 "webdav" 服务器加上了 "etag" 头部和条件请求的功能
 
 支持范围请求，跨域访问，支持内容压缩
 
 支持在浏览器中展示文件夹内容了，使用"koa2-serve-index"
 
 如果请求方法是"GET"或者"HEAD"，交给"koa"服务器处理，提供静态文件
+
+使用 "http-auth"进行用户验证。
 
 ## Installation
 
