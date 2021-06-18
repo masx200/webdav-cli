@@ -4,7 +4,7 @@
         "registry": "https://registry.npmjs.com"
     },
     "name": "@masx200/webdav-cli",
-    "version": "2.1.2",
+    "version": "2.2.0",
     "description": "A simple zero-configuration command-line webdav server",
     "license": "MIT",
     "keywords": [
@@ -26,6 +26,14 @@
     "devDependencies": {
         "@types/etag": "^1.8.0",
         "@types/fresh": "^0.5.0",
+        "@types/koa": "^2.13.3",
+        "@types/koa__cors": "^3.0.2",
+        "@types/koa-compress": "^4.0.1",
+        "@types/koa-conditional-get": "^2.0.0",
+        "@types/koa-etag": "^3.0.0",
+        "@types/koa-logger": "^3.1.1",
+        "@types/koa-range": "^0.3.2",
+        "@types/koa-static": "^4.0.1",
         "@types/minimist": "^1.2.1",
         "@types/node": "^15.12.2",
         "hosted-git-info": "4.0.2",
@@ -35,8 +43,18 @@
         "typescript": "^4.3.2"
     },
     "dependencies": {
+        "@koa/cors": "^3.1.0",
+        "@masx200/koa-stream-etag": "^5.0.3",
         "etag": "^1.8.1",
         "fresh": "^0.5.2",
+        "koa": "^2.13.1",
+        "koa-compress": "^5.0.1",
+        "koa-conditional-get": "^3.0.0",
+        "koa-etag": "^4.0.0",
+        "koa-logger": "^3.2.1",
+        "koa-range": "^0.3.0",
+        "koa-static": "^5.0.0",
+        "koa2-serve-index": "^2.0.1",
         "minimist": "^1.2.5",
         "webdav-server": "^2.6.2"
     },

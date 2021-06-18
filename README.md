@@ -14,7 +14,9 @@ A simple zero-configuration command-line webdav server
 
 给 webdav 服务器加上了 etag 头部和条件请求的功能
 
-支持范围请求，跨域访问，
+支持范围请求，跨域访问，支持内容压缩
+
+支持在浏览器中展示文件夹内容了，使用"koa2-serve-index"
 
 ## Installation
 
@@ -46,8 +48,8 @@ options:
   --digest     Enable digest authentication [basic]
   --username   Username for basic/digest authentication [random]
   --password   Password for basic/digest authentication [random]
-  --directory  Show directory listings [false]
 
+  --disableAuthentication  The server file becomes read-only without Authentication.[false]
   --ssl        Enable https [false]
   --sslKey     Path to ssl key file [self-signed]
   --sslCert    Path to ssl cert file [self-signed]
@@ -67,7 +69,7 @@ env:
   WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,
   WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,
   WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,
-  WEBDAV_CLI_DIRECTORY, WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS
+   WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS
   WEBDAV_CLI_DISABLE_AUTHENTICATION
 ```
 

@@ -15,7 +15,6 @@ export interface WebdavCliConfig {
     rights: WebdavCliRights;
     disableAuthentication?: boolean;
     url?: string;
-    directory?: boolean;
 }
 
 export interface WebdavCliServer extends webdav.WebDAVServer {

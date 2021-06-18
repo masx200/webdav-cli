@@ -1,10 +1,44 @@
-import etag from "etag";
-import fs from "fs";
-import path from "path";
+import cors from "@koa/cors";
+//@ts-ignore
+import streametag from "@masx200/koa-stream-etag";
+//@ts-ignore
+import Koa from "koa";
+import compress from "koa-compress";
+//@ts-ignore
+import conditional from "koa-conditional-get";
+import koaetag from "koa-etag";
+import logger from "koa-logger";
+import range from "koa-range";
+import servestatic from "koa-static";
+//@ts-ignore
+import serveIndex from "koa2-serve-index";
 import { v2 as webdav } from "webdav-server";
-import fresh from "fresh";
-import { IncomingMessage, ServerResponse } from "http";
+
 export function etag_conditional_get(publicpath: string) {
+    const app = new Koa();
+    app.use(async (ctx, next) => {
+        ctx.response.set("Access-Control-Allow-Origin", "*");
+        return next();
+    });
+
+    app.use(async (ctx, next) => {
+        await next();
+        if (ctx.method === "HEAD") {
+            ctx.res.end();
+        }
+        return;
+    });
+    app.use(range);
+    app.use(cors({}));
+    app.use(logger());
+    app.use(conditional());
+
+    app.use(compress({}));
+    app.use(streametag({}));
+    app.use(koaetag({}));
+    app.use(serveIndex(publicpath, { hidden: true }));
+    app.use(servestatic(publicpath, { hidden: true }));
+    const serverHandler = app.callback();
     return function middleware(
         ctx: webdav.HTTPRequestContext,
         next: () => void,
@@ -17,37 +51,8 @@ export function etag_conditional_get(publicpath: string) {
         ) {
             return next();
         }
-        const filepath = path.join(publicpath, ctx.requested.uri);
+        serverHandler(req, res);
 
-        if (
-            !ctx.response.hasHeader("etag") &&
-            fs.existsSync(filepath) &&
-            ctx.request.method &&
-            ["GET", "HEAD"].includes(ctx.request.method)
-        ) {
-            const stat = fs.statSync(filepath);
-            if (stat.isFile()) {
-                ctx.response.setHeader("etag", etag(fs.statSync(filepath)));
-            }
-        }
-
-        if (
-            isFresh(req, res)
-            // ctx.response.hasHeader("etag") &&
-            // ctx.request.headers["if-none-match"] ===
-            //     ctx.response.getHeader("etag")
-        ) {
-            ctx.response.statusCode = 304;
-            ctx.response.end();
-            ctx.exit();
-            return;
-        }
-        next();
+        return;
     };
-}
-function isFresh(req: IncomingMessage, res: ServerResponse) {
-    return fresh(req.headers, {
-        etag: res.getHeader("ETag"),
-        "last-modified": res.getHeader("Last-Modified"),
-    });
 }

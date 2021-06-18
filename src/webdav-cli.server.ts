@@ -51,7 +51,6 @@ export class WebdavCli {
             (item: WebdavCliRights[number]) => RIGHTS.includes(item),
         );
         const url = `${ssl ? "https" : "http"}://${host}:${port}`;
-        const directory = Boolean(config.directory);
 
         return {
             host,
@@ -66,7 +65,6 @@ export class WebdavCli {
             rights,
             url,
             disableAuthentication,
-            directory,
         };
     }
 
@@ -165,10 +163,7 @@ export class WebdavCli {
         );
         const logs = [
             `Server running at ${config.url}`,
-            `rights: ${config.rights}`,
-            `digest: ${config.digest}`,
-            `username: ${config.username}`,
-            `password: ${config.password}`,
+
             "Hit CTRL-C to stop the server",
             "Run with --help to print help",
         ];
