@@ -9,8 +9,11 @@ exports.WebdavCli = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = require("path");
 const webdav_server_1 = require("webdav-server");
-const http_auth_1 = require("./http-auth");
+const afterlogger_1 = require("./afterlogger");
+const beforelogger_1 = require("./beforelogger");
+const createhttpauthmiddle_1 = require("./createhttpauthmiddle");
 const koa_etag_conditional_get_1 = require("./koa-etag-conditional-get");
+const propfindchecker_1 = require("./propfindchecker");
 const webdav_cli_constants_1 = require("./webdav-cli.constants");
 const webdav_cli_utils_1 = require("./webdav-cli.utils");
 class WebdavCli {
@@ -112,38 +115,21 @@ class WebdavCli {
                 key: config.sslKey,
             });
         const server = new webdav_server_1.v2.WebDAVServer(options);
-        server.beforeRequest(async (ctx, next) => {
-            const { url, headers, method } = ctx.request;
-            console.log(">> ", method, url, headers);
-            next();
-        });
+        server.beforeRequest(beforelogger_1.beforelogger());
         if (!config.disableAuthentication) {
             server.beforeRequest(
-                http_auth_1.createhttpauth({
-                    user: config.username,
-                    pass: config.password,
+                createhttpauthmiddle_1.createhttpauthmiddle(
+                    config.username,
+                    config.password,
                     authentication,
-                }),
+                ),
             );
         }
-        server.beforeRequest((arg, next) => {
-            const { headers, method } = arg.request;
-            const { depth } = headers;
-            if (method === "PROPFIND" && depth !== "0" && depth !== "1") {
-                arg.setCode(403);
-                arg.exit();
-            } else {
-                next();
-            }
-        });
+        server.beforeRequest(propfindchecker_1.propfindchecker());
         server.beforeRequest(
             koa_etag_conditional_get_1.etag_conditional_get(config.path),
         );
-        server.afterRequest((arg, next) => {
-            const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} `;
-            console.log(log);
-            next();
-        });
+        server.afterRequest(afterlogger_1.afterlogger());
         return server;
     }
     async start() {

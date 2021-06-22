@@ -8,3 +8,4 @@ export declare class WebdavCli {
     init(): webdav.WebDAVServer;
     start(): Promise<void>;
 }
+export declare type HTTPRequestContext = webdav.HTTPRequestContext;

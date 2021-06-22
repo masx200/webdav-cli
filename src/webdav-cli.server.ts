@@ -3,8 +3,11 @@ import http from "http";
 import https from "https";
 import { join } from "path";
 import { v2 as webdav } from "webdav-server";
-import { createhttpauth } from "./http-auth";
+import { afterlogger } from "./afterlogger";
+import { beforelogger } from "./beforelogger";
+import { createhttpauthmiddle } from "./createhttpauthmiddle";
 import { etag_conditional_get } from "./koa-etag-conditional-get";
+import { propfindchecker } from "./propfindchecker";
 import { RIGHTS } from "./webdav-cli.constants";
 import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
 import { getRandomString } from "./webdav-cli.utils";
@@ -125,37 +128,19 @@ export class WebdavCli {
             });
         const server = new webdav.WebDAVServer(options);
 
-        server.beforeRequest(async (ctx, next) => {
-            const { url, headers, method } = ctx.request;
-            console.log(">> ", method, url, headers);
-            next();
-        });
+        server.beforeRequest(beforelogger());
         if (!config.disableAuthentication) {
             server.beforeRequest(
-                createhttpauth({
-                    user: config.username,
-                    pass: config.password,
+                createhttpauthmiddle(
+                    config.username,
+                    config.password,
                     authentication,
-                }),
+                ),
             );
         }
-        server.beforeRequest((arg, next) => {
-            const { headers, method } = arg.request;
-            const { depth } = headers;
-            if (method === "PROPFIND" && depth !== "0" && depth !== "1") {
-                arg.setCode(403);
-                arg.exit();
-            } else {
-                next();
-            }
-        });
+        server.beforeRequest(propfindchecker());
         server.beforeRequest(etag_conditional_get(config.path));
-        server.afterRequest((arg, next) => {
-            const log = `>> ${arg.request.method} ${arg.requested.uri} > ${arg.response.statusCode} `;
-            // server.emit('log', null, null, '/', log);
-            console.log(log);
-            next();
-        });
+        server.afterRequest(afterlogger());
 
         return server;
     }
@@ -219,3 +204,4 @@ export class WebdavCli {
         await server.startAsync(config.port);
     }
 }
+export type HTTPRequestContext = webdav.HTTPRequestContext;
