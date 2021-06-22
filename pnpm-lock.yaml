@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@koa/cors': ^3.1.0
   '@masx200/koa-stream-etag': ^5.0.3
-  '@masx200/serve-cli': ^1.1.1
+  '@masx200/serve-cli': ^1.1.2
   '@types/etag': ^1.8.0
   '@types/fresh': ^0.5.0
   '@types/http-auth': ^4.1.0
@@ -39,7 +39,7 @@ specifiers:
 dependencies:
   '@koa/cors': 3.1.0
   '@masx200/koa-stream-etag': 5.0.3
-  '@masx200/serve-cli': 1.1.1
+  '@masx200/serve-cli': 1.1.2
   etag: 1.8.1
   fresh: 0.5.2
   http-auth: 4.1.5
@@ -96,8 +96,8 @@ packages:
       etag: 1.8.1
     dev: false
 
-  /@masx200/serve-cli/1.1.1:
-    resolution: {integrity: sha512-awaoAdKHvyW1SltZ7CmTV5KZaWleVOasAAL6UbmF2W2LBgIyL7HyGI3w/ftuy90oL5WJWvAKBG2GpYMnh1s33w==}
+  /@masx200/serve-cli/1.1.2:
+    resolution: {integrity: sha512-aS9M17sityPdYQVbMhYEfcrFzedN0gL3bXFxyKfjvb0B6oDLHRUUg23p7JHr/GK7V5RQbDFc73zCQ4hFzM/NBw==}
     hasBin: true
     dependencies:
       '@koa/cors': 3.1.0

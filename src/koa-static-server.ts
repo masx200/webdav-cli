@@ -3,7 +3,7 @@ import Koa from "koa";
 import logger from "koa-logger";
 import { v2 as webdav } from "webdav-server";
 //@ts-ignore
-import {} from '@masx200/serve-cli'
+import { loadcoremiddles } from "@masx200/serve-cli";
 export function koa_static_server(publicpath: string) {
     const app = new Koa();
     // app.use(async (ctx, next) => {
@@ -28,7 +28,7 @@ export function koa_static_server(publicpath: string) {
     // app.use(koaetag({}));
     // app.use(serveIndex(publicpath, { hidden: true }));
     // app.use(servestatic(publicpath, { hidden: true }));
-
+    loadcoremiddles(app, publicpath);
     const serverHandler = app.callback();
     return function middleware(
         ctx: webdav.HTTPRequestContext,
