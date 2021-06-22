@@ -1,7 +1,7 @@
 import { v2 as webdav } from "webdav-server";
-import httpauth from "http-auth";
 //@ts-ignore
-import utils from "http-auth/src/auth/utils.js";
+import { createbasicauth } from "./createbasicauth";
+import { createdigestauth } from "./createdigestauth";
 
 export function createhttpauth(options: {
     user: string;
@@ -11,41 +11,11 @@ export function createhttpauth(options: {
     const realm = "Default realm";
     const auth =
         options.authentication === "HTTPBasicAuthentication"
-            ? createbasicauth()
-            : createdigestauth();
+            ? createbasicauth(realm, options.user, options.pass)
+            : createdigestauth(realm, options.user, options.pass);
     return (ctx: webdav.HTTPRequestContext, next: () => void) => {
         auth.check((req, res) => {
             next();
         })(ctx.request, ctx.response);
     };
-
-    function createdigestauth() {
-        return httpauth.digest(
-            {
-                realm,
-            },
-            // Expecting md5(username:realm:password) in callback.
-            (username, callback) => {
-                if (username === options.user) {
-                    callback(utils.md5(`${username}:${realm}:${options.pass}`));
-                } else {
-                    callback();
-                }
-            },
-        );
-    }
-
-    function createbasicauth() {
-        return httpauth.basic(
-            {
-                realm,
-            },
-            (username, password, callback) => {
-                // Custom authentication method.
-                callback(
-                    username === options.user && password === options.pass,
-                );
-            },
-        );
-    }
 }
