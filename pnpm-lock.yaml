@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@koa/cors': ^3.1.0
   '@masx200/koa-stream-etag': ^5.0.3
-  '@masx200/serve-cli': ^1.1.2
+  '@masx200/serve-cli': ^1.1.4
   '@types/etag': ^1.8.0
   '@types/fresh': ^0.5.0
   '@types/http-auth': ^4.1.0
@@ -26,7 +26,6 @@ specifiers:
   koa-conditional-get: ^3.0.0
   koa-etag: ^4.0.0
   koa-logger: ^3.2.1
-  koa-range: ^0.3.0
   koa-static: ^5.0.0
   koa2-serve-index: ^2.0.1
   minimist: ^1.2.5
@@ -39,7 +38,7 @@ specifiers:
 dependencies:
   '@koa/cors': 3.1.0
   '@masx200/koa-stream-etag': 5.0.3
-  '@masx200/serve-cli': 1.1.2
+  '@masx200/serve-cli': 1.1.4
   etag: 1.8.1
   fresh: 0.5.2
   http-auth: 4.1.5
@@ -48,7 +47,6 @@ dependencies:
   koa-conditional-get: 3.0.0
   koa-etag: 4.0.0
   koa-logger: 3.2.1
-  koa-range: 0.3.0
   koa-static: 5.0.0
   koa2-serve-index: 2.0.1
   minimist: 1.2.5
@@ -83,8 +81,8 @@ packages:
       vary: 1.1.2
     dev: false
 
-  /@masx200/koa-range/1.0.0:
-    resolution: {integrity: sha512-WVFJFVBbXHy1opDibm/6J5rIbgx/N7niHyi/SEpmxZRarU7+PHhTGbwmQ7btqm/Kio7UaiXtc9XnLx9j52C0qg==}
+  /@masx200/koa-range/1.0.2:
+    resolution: {integrity: sha512-HSsihAQ8cb1RYfnw3vQyEGOmCN1egmAmZdCJJWtCWDkK+q1vRjMq/E1b+o/bPR2xWJYluae2uAkOTOqdqu6R7A==}
     engines: {node: '>=7'}
     dependencies:
       stream-slice: 0.1.2
@@ -96,19 +94,18 @@ packages:
       etag: 1.8.1
     dev: false
 
-  /@masx200/serve-cli/1.1.2:
-    resolution: {integrity: sha512-aS9M17sityPdYQVbMhYEfcrFzedN0gL3bXFxyKfjvb0B6oDLHRUUg23p7JHr/GK7V5RQbDFc73zCQ4hFzM/NBw==}
+  /@masx200/serve-cli/1.1.4:
+    resolution: {integrity: sha512-vZuF8CemQqbgvSvwKbylzCmeL8wSMr68sHkwbVRpduridcN5DRUip9kMzDTTaNuJ1ogS8WcwFSJulpv5tvbw6g==}
     hasBin: true
     dependencies:
       '@koa/cors': 3.1.0
-      '@masx200/koa-range': 1.0.0
+      '@masx200/koa-range': 1.0.2
       '@masx200/koa-stream-etag': 5.0.3
       koa: 2.13.1
       koa-compress: 5.0.1
       koa-conditional-get: 3.0.0
       koa-etag: 4.0.0
       koa-logger: 3.2.1
-      koa-range: 0.3.0
       koa-static: 5.0.0
       koa2-serve-index: 2.0.1
       minimist: 1.2.5
@@ -630,13 +627,6 @@ packages:
       chalk: 2.4.2
       humanize-number: 0.0.2
       passthrough-counter: 1.0.0
-    dev: false
-
-  /koa-range/0.3.0:
-    resolution: {integrity: sha1-NYjjSWRzqDmhvSZNKkKx2FvX/qw=}
-    engines: {node: '>=7'}
-    dependencies:
-      stream-slice: 0.1.2
     dev: false
 
   /koa-send/5.0.1:
