@@ -4,7 +4,7 @@ import { loadcoremiddles } from "@masx200/serve-cli";
 export function koa_static_server(publicpath) {
     const app = new Koa();
     app.use(logger());
-    loadcoremiddles(app, publicpath);
+    loadcoremiddles(app, publicpath, false);
     const serverHandler = app.callback();
     return function middleware(ctx, next) {
         const { request, response } = ctx;

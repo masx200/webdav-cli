@@ -28,7 +28,7 @@ export function koa_static_server(publicpath: string) {
     // app.use(koaetag({}));
     // app.use(serveIndex(publicpath, { hidden: true }));
     // app.use(servestatic(publicpath, { hidden: true }));
-    loadcoremiddles(app, publicpath);
+    loadcoremiddles(app, publicpath, false);
     const serverHandler = app.callback();
     return function middleware(
         ctx: webdav.HTTPRequestContext,
