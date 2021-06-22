@@ -1,13 +1,5 @@
-"use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.showhelp = void 0;
-const process_1 = __importDefault(require("process"));
-function showhelp() {
+import process from "process";
+export function showhelp() {
     console.log(
         [
             "usage: webdav-cli [options]",
@@ -45,6 +37,5 @@ function showhelp() {
             "",
         ].join("\n"),
     );
-    process_1.default.exit();
+    process.exit();
 }
-exports.showhelp = showhelp;

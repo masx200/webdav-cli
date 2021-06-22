@@ -1,7 +1,7 @@
 import { v2 as webdav } from "webdav-server";
 //@ts-ignore
-import { createbasicauth } from "./createbasicauth";
-import { createdigestauth } from "./createdigestauth";
+import { createbasicauth } from "./createbasicauth.js";
+import { createdigestauth } from "./createdigestauth.js";
 
 export function createhttpauth(options: {
     user: string;

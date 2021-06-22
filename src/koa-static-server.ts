@@ -14,7 +14,7 @@ import servestatic from "koa-static";
 import serveIndex from "koa2-serve-index";
 import { v2 as webdav } from "webdav-server";
 
-export function etag_conditional_get(publicpath: string) {
+export function koa_static_server(publicpath: string) {
     const app = new Koa();
     app.use(async (ctx, next) => {
         ctx.response.set("Access-Control-Allow-Origin", "*");

@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.propfindchecker = void 0;
-function propfindchecker() {
+export function propfindchecker() {
     return (arg, next) => {
         const { headers, method } = arg.request;
         const { depth } = headers;
@@ -13,4 +10,3 @@ function propfindchecker() {
         }
     };
 }
-exports.propfindchecker = propfindchecker;

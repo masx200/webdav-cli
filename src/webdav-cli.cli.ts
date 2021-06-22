@@ -2,8 +2,8 @@
 import process from "process";
 
 import minimist from "minimist";
-import { WebdavCli } from "./webdav-cli.server";
-import { showhelp } from "./showhelp";
+import { WebdavCli } from "./webdav-cli.server.js";
+import { showhelp } from "./showhelp.js";
 // import { HOMEPAGE } from './webdav-cli.constants';
 
 const argv = minimist(process.argv.slice(2));

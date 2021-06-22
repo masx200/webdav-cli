@@ -1,5 +1,5 @@
 import { v2 as webdav } from "webdav-server";
-import { WebdavCliConfig } from "./webdav-cli.interfaces";
+import { WebdavCliConfig } from "./webdav-cli.interfaces.js";
 export declare class WebdavCli {
     config: WebdavCliConfig;
     server: webdav.WebDAVServer;

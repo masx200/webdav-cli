@@ -1,5 +1,5 @@
-import { createbasicauth } from "./createbasicauth";
-import { createdigestauth } from "./createdigestauth";
+import { createbasicauth } from "./createbasicauth.js";
+import { createdigestauth } from "./createdigestauth.js";
 export function createhttpauth(options) {
     const realm = "Default realm";
     const auth =

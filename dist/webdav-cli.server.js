@@ -1,22 +1,17 @@
-"use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebdavCli = void 0;
-const fs_1 = __importDefault(require("fs"));
-const path_1 = require("path");
-const webdav_server_1 = require("webdav-server");
-const afterlogger_1 = require("./afterlogger");
-const beforelogger_1 = require("./beforelogger");
-const createhttpauthmiddle_1 = require("./createhttpauthmiddle");
-const koa_etag_conditional_get_1 = require("./koa-etag-conditional-get");
-const propfindchecker_1 = require("./propfindchecker");
-const webdav_cli_constants_1 = require("./webdav-cli.constants");
-const webdav_cli_utils_1 = require("./webdav-cli.utils");
-class WebdavCli {
+import fs from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import { v2 as webdav } from "webdav-server";
+import { afterlogger } from "./afterlogger.js";
+import { beforelogger } from "./beforelogger.js";
+import { createhttpauthmiddle } from "./createhttpauthmiddle.js";
+import { koa_static_server } from "./koa-static-server.js";
+import { propfindchecker } from "./propfindchecker.js";
+import { RIGHTS } from "./webdav-cli.constants.js";
+import { getRandomString } from "./webdav-cli.utils.js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+export class WebdavCli {
     config;
     server;
     constructor(config) {
@@ -24,11 +19,8 @@ class WebdavCli {
         this.server = this.init();
     }
     getConfig(config) {
-        const selfSignedKey = path_1.join(
-            __dirname,
-            "/../certs/self-signed.key.pem",
-        );
-        const selfSignedCert = path_1.join(
+        const selfSignedKey = join(__dirname, "/../certs/self-signed.key.pem");
+        const selfSignedCert = join(
             __dirname,
             "/../certs/self-signed.cert.pem",
         );
@@ -36,22 +28,14 @@ class WebdavCli {
         const host = config.host || "0.0.0.0";
         const port = config.port || 1900;
         const digest = Boolean(config.digest);
-        let username = (
-            config.username || webdav_cli_utils_1.getRandomString(16)
-        ).toString();
-        let password = (
-            config.password || webdav_cli_utils_1.getRandomString(16)
-        ).toString();
+        let username = (config.username || getRandomString(16)).toString();
+        let password = (config.password || getRandomString(16)).toString();
         const ssl = Boolean(config.ssl);
         const sslKey = ssl
-            ? fs_1.default
-                  .readFileSync(config.sslKey || selfSignedKey)
-                  .toString()
+            ? fs.readFileSync(config.sslKey || selfSignedKey).toString()
             : "";
         const sslCert = ssl
-            ? fs_1.default
-                  .readFileSync(config.sslCert || selfSignedCert)
-                  .toString()
+            ? fs.readFileSync(config.sslCert || selfSignedCert).toString()
             : "";
         const disableAuthentication = Boolean(config.disableAuthentication);
         if (disableAuthentication) {
@@ -60,7 +44,7 @@ class WebdavCli {
             password = "";
         }
         const rights = (config.rights || ["all"]).filter((item) =>
-            webdav_cli_constants_1.RIGHTS.includes(item),
+            RIGHTS.includes(item),
         );
         const url = `${ssl ? "https" : "http"}://${host}:${port}`;
         return {
@@ -80,14 +64,13 @@ class WebdavCli {
     }
     init() {
         const config = this.config;
-        const userManager = new webdav_server_1.v2.SimpleUserManager();
+        const userManager = new webdav.SimpleUserManager();
         const user = userManager.addUser(
             config.username,
             config.password,
             false,
         );
-        const privilegeManager =
-            new webdav_server_1.v2.SimplePathPrivilegeManager();
+        const privilegeManager = new webdav.SimplePathPrivilegeManager();
         privilegeManager.setRights(user, "/", config.rights);
         const authentication = config.digest
             ? "HTTPDigestAuthentication"
@@ -114,22 +97,20 @@ class WebdavCli {
                 cert: config.sslCert,
                 key: config.sslKey,
             });
-        const server = new webdav_server_1.v2.WebDAVServer(options);
-        server.beforeRequest(beforelogger_1.beforelogger());
+        const server = new webdav.WebDAVServer(options);
+        server.beforeRequest(beforelogger());
         if (!config.disableAuthentication) {
             server.beforeRequest(
-                createhttpauthmiddle_1.createhttpauthmiddle(
+                createhttpauthmiddle(
                     config.username,
                     config.password,
                     authentication,
                 ),
             );
         }
-        server.beforeRequest(propfindchecker_1.propfindchecker());
-        server.beforeRequest(
-            koa_etag_conditional_get_1.etag_conditional_get(config.path),
-        );
-        server.afterRequest(afterlogger_1.afterlogger());
+        server.beforeRequest(propfindchecker());
+        server.beforeRequest(koa_static_server(config.path));
+        server.afterRequest(afterlogger());
         return server;
     }
     async start() {
@@ -144,7 +125,7 @@ class WebdavCli {
         );
         await server.setFileSystemAsync(
             "/",
-            new webdav_server_1.v2.PhysicalFileSystem(config.path),
+            new webdav.PhysicalFileSystem(config.path),
         );
         const logs = [
             `Server running at ${config.url}`,
@@ -187,4 +168,3 @@ class WebdavCli {
         await server.startAsync(config.port);
     }
 }
-exports.WebdavCli = WebdavCli;

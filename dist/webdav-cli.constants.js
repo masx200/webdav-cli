@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RIGHTS = void 0;
-exports.RIGHTS = [
+export const RIGHTS = [
     "all",
     "canCreate",
     "canDelete",

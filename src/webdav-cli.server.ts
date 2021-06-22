@@ -1,17 +1,19 @@
 import fs from "fs";
 import http from "http";
 import https from "https";
-import { join } from "path";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 import { v2 as webdav } from "webdav-server";
-import { afterlogger } from "./afterlogger";
-import { beforelogger } from "./beforelogger";
-import { createhttpauthmiddle } from "./createhttpauthmiddle";
-import { etag_conditional_get } from "./koa-etag-conditional-get";
-import { propfindchecker } from "./propfindchecker";
-import { RIGHTS } from "./webdav-cli.constants";
-import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces";
-import { getRandomString } from "./webdav-cli.utils";
-
+import { afterlogger } from "./afterlogger.js";
+import { beforelogger } from "./beforelogger.js";
+import { createhttpauthmiddle } from "./createhttpauthmiddle.js";
+import { koa_static_server } from "./koa-static-server.js";
+import { propfindchecker } from "./propfindchecker.js";
+import { RIGHTS } from "./webdav-cli.constants.js";
+import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces.js";
+import { getRandomString } from "./webdav-cli.utils.js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 export class WebdavCli {
     config: WebdavCliConfig;
     server: webdav.WebDAVServer;
@@ -139,7 +141,7 @@ export class WebdavCli {
             );
         }
         server.beforeRequest(propfindchecker());
-        server.beforeRequest(etag_conditional_get(config.path));
+        server.beforeRequest(koa_static_server(config.path));
         server.afterRequest(afterlogger());
 
         return server;

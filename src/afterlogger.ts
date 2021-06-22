@@ -1,4 +1,4 @@
-import { HTTPRequestContext } from "./webdav-cli.server";
+import { HTTPRequestContext } from "./webdav-cli.server.js";
 
 export function afterlogger() {
     return (arg: HTTPRequestContext, next: () => void) => {

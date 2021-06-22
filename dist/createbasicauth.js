@@ -1,14 +1,6 @@
-"use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createbasicauth = void 0;
-const http_auth_1 = __importDefault(require("http-auth"));
-function createbasicauth(realm, user, pass) {
-    return http_auth_1.default.basic(
+import httpauth from "http-auth";
+export function createbasicauth(realm, user, pass) {
+    return httpauth.basic(
         {
             realm,
         },
@@ -17,4 +9,3 @@ function createbasicauth(realm, user, pass) {
         },
     );
 }
-exports.createbasicauth = createbasicauth;

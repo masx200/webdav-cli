@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.com"
@@ -18,6 +19,7 @@
     },
     "preferGlobal": true,
     "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0",
         "build": " tsc -p tsconfig.build.json",
