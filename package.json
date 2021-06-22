@@ -5,7 +5,7 @@
         "registry": "https://registry.npmjs.com"
     },
     "name": "@masx200/webdav-cli",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "description": "A simple zero-configuration command-line webdav server",
     "license": "MIT",
     "keywords": [
@@ -48,7 +48,7 @@
     "dependencies": {
         "@koa/cors": "^3.1.0",
         "@masx200/koa-stream-etag": "^5.0.3",
-        "@masx200/serve-cli": "^1.1.4",
+        "@masx200/serve-cli": "^1.1.5",
         "etag": "^1.8.1",
         "fresh": "^0.5.2",
         "http-auth": "^4.1.5",
