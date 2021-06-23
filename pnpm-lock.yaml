@@ -2,8 +2,9 @@ lockfileVersion: 5.3
 
 specifiers:
   '@koa/cors': ^3.1.0
+  '@masx200/koa-range': ^1.0.4
   '@masx200/koa-stream-etag': ^5.0.3
-  '@masx200/serve-cli': ^1.1.5
+  '@masx200/serve-cli': ^1.1.6
   '@types/etag': ^1.8.0
   '@types/fresh': ^0.5.0
   '@types/http-auth': ^4.1.0
@@ -37,8 +38,9 @@ specifiers:
 
 dependencies:
   '@koa/cors': 3.1.0
+  '@masx200/koa-range': 1.0.4
   '@masx200/koa-stream-etag': 5.0.3
-  '@masx200/serve-cli': 1.1.5
+  '@masx200/serve-cli': 1.1.6
   etag: 1.8.1
   fresh: 0.5.2
   http-auth: 4.1.5
@@ -81,8 +83,8 @@ packages:
       vary: 1.1.2
     dev: false
 
-  /@masx200/koa-range/1.0.2:
-    resolution: {integrity: sha512-HSsihAQ8cb1RYfnw3vQyEGOmCN1egmAmZdCJJWtCWDkK+q1vRjMq/E1b+o/bPR2xWJYluae2uAkOTOqdqu6R7A==}
+  /@masx200/koa-range/1.0.4:
+    resolution: {integrity: sha512-LEqsEpTaJbTB7YylfWYxLofga6Xqk0H8We70a/QT8SHxKOiIDiLwKGiVrp7PHWnn+8QoOqAC7/S5ttXB4X8tiA==}
     engines: {node: '>=7'}
     dependencies:
       stream-slice: 0.1.2
@@ -94,12 +96,12 @@ packages:
       etag: 1.8.1
     dev: false
 
-  /@masx200/serve-cli/1.1.5:
-    resolution: {integrity: sha512-FGo9GRrPm61ZV7/xcCJW10lxS1gm+Dz5ZO2C4HOKRJJR4NE4G9LgXIleEBABO36vUvudsFT0A7B3oLXeW8n3rA==}
+  /@masx200/serve-cli/1.1.6:
+    resolution: {integrity: sha512-XjSryBk3aut1i3pXcZ8yGDE6hCFcY5jE5XMk1t9Ir+6hQhQmeJsTD24veE8WStkBX1RpozvXNYmSVy10kNi69w==}
     hasBin: true
     dependencies:
       '@koa/cors': 3.1.0
-      '@masx200/koa-range': 1.0.2
+      '@masx200/koa-range': 1.0.4
       '@masx200/koa-stream-etag': 5.0.3
       koa: 2.13.1
       koa-compress: 5.0.1
