@@ -5,7 +5,7 @@
         "registry": "https://registry.npmjs.com"
     },
     "name": "@masx200/webdav-cli",
-    "version": "2.2.4",
+    "version": "2.3.0",
     "description": "A simple zero-configuration command-line webdav server",
     "license": "MIT",
     "keywords": [
@@ -14,16 +14,14 @@
         "webdav",
         "server"
     ],
-    "bin": {
-        "webdav-cli": "dist/webdav-cli.cli.js"
-    },
+    "bin": "dist/webdav-cli.cli.js",
     "preferGlobal": true,
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0",
-        "build": " tsc -p tsconfig.build.json",
-        "format": "prettier --write \"**/*.ts\" **/*.js *.json *.md"
+        "build": " rollup -c rollup.config.js",
+        "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md"
     },
     "devDependencies": {
         "@types/etag": "^1.8.0",
@@ -49,9 +47,13 @@
         "@koa/cors": "^3.1.0",
         "@masx200/koa-range": "^1.0.4",
         "@masx200/koa-stream-etag": "^5.0.3",
-        "@masx200/serve-cli": "^1.1.6",
+        "@masx200/serve-cli": "^1.2.0",
+        "@rollup/plugin-commonjs": "^20.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.0.4",
         "etag": "^1.8.1",
         "fresh": "^0.5.2",
+        "graceful-fs": "^4.2.6",
         "http-auth": "^4.1.5",
         "koa": "^2.13.1",
         "koa-compress": "^5.0.1",
@@ -61,6 +63,9 @@
         "koa-static": "^5.0.0",
         "koa2-serve-index": "^2.0.1",
         "minimist": "^1.2.5",
+        "rollup": "^2.56.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-ts": "^1.4.0",
         "webdav-server": "^2.6.2"
     },
     "directories": {
