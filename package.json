@@ -5,7 +5,7 @@
         "registry": "https://registry.npmjs.com"
     },
     "name": "@masx200/webdav-cli",
-    "version": "2.3.0",
+    "version": "2.3.2",
     "description": "A simple zero-configuration command-line webdav server",
     "license": "MIT",
     "keywords": [
@@ -24,6 +24,9 @@
         "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md"
     },
     "devDependencies": {
+        "@rollup/plugin-commonjs": "^20.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.0.4",
         "@types/etag": "^1.8.0",
         "@types/fresh": "^0.5.0",
         "@types/http-auth": "^4.1.0",
@@ -40,6 +43,9 @@
         "hosted-git-info": "4.0.2",
         "prettier": "^2.3.1",
         "reflect-metadata": "^0.1.13",
+        "rollup": "^2.56.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-ts": "^1.4.0",
         "tsconfig-paths": "^3.9.0",
         "typescript": "^4.3.2"
     },
@@ -48,13 +54,10 @@
         "@masx200/koa-range": "^1.0.4",
         "@masx200/koa-stream-etag": "^5.0.3",
         "@masx200/serve-cli": "^1.2.0",
-        "@rollup/plugin-commonjs": "^20.0.0",
-        "@rollup/plugin-json": "^4.1.0",
-        "@rollup/plugin-node-resolve": "^13.0.4",
         "etag": "^1.8.1",
         "fresh": "^0.5.2",
         "graceful-fs": "^4.2.6",
-        "http-auth": "^4.1.5",
+        "http-auth": "^4.1.7",
         "koa": "^2.13.1",
         "koa-compress": "^5.0.1",
         "koa-conditional-get": "^3.0.0",
@@ -63,9 +66,6 @@
         "koa-static": "^5.0.0",
         "koa2-serve-index": "^2.0.1",
         "minimist": "^1.2.5",
-        "rollup": "^2.56.0",
-        "rollup-plugin-terser": "^7.0.2",
-        "rollup-plugin-ts": "^1.4.0",
         "webdav-server": "^2.6.2"
     },
     "directories": {
