@@ -78,5 +78,8 @@
     "bugs": {
         "url": "https://github.com/masx200/webdav-cli/issues"
     },
-    "homepage": "https://github.com/masx200/webdav-cli#readme"
+    "homepage": "https://github.com/masx200/webdav-cli#readme",
+    "resolutions": {
+        "debug": "4.3.2"
+    }
 }
