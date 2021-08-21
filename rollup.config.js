@@ -1,10 +1,11 @@
-import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import ts from "rollup-plugin-ts";
 // import babel from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
-import { terser } from "rollup-plugin-terser";
+import resolve from "@rollup/plugin-node-resolve";
 import { defineConfig } from "rollup";
+import externals from "rollup-plugin-node-externals";
+import { terser } from "rollup-plugin-terser";
+import ts from "rollup-plugin-ts";
 const banner = `#!/usr/bin/env node`;
 const terserplugin = terser({
     compress: {
@@ -35,6 +36,7 @@ export default defineConfig([
             "url",
             "http",
             "https",
+            "http-auth/src/auth/utils.js",
         ],
         input: "./src/webdav-cli.cli.ts",
         output: [
@@ -45,6 +47,19 @@ export default defineConfig([
                 format: "esm",
             },
         ],
-        plugins: [ts(), resolve(), commonjs(), terserplugin, json()],
+        plugins: [
+            externals({
+                builtins: true,
+                deps: false,
+                devDeps: true,
+                peerDeps: true,
+                optDeps: true,
+            }),
+            ts(),
+            resolve(),
+            commonjs(),
+            terserplugin,
+            json(),
+        ],
     },
 ]);

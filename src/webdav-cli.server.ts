@@ -180,7 +180,7 @@ export class WebdavCli {
                     return;
                 }
                 rawhttpserver.on("error", (err) => {
-                    if (err.code === "EADDRINUSE") {
+                    if (Reflect.get(err, "code") === "EADDRINUSE") {
                         console.error(err);
                         rawhttpserver?.listen(
                             Math.round(Math.random() * 65535),
