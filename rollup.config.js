@@ -50,7 +50,7 @@ export default defineConfig([
         plugins: [
             externals({
                 builtins: true,
-                deps: false,
+                deps: true,
                 devDeps: true,
                 peerDeps: true,
                 optDeps: true,

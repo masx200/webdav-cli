@@ -81,6 +81,6 @@
     "homepage": "https://github.com/masx200/webdav-cli#readme",
     "resolutions": {
         "debug": "4.3.2",
-        "object-path": "0.11.7"
+        "object-path": "0.11.8"
     }
 }
