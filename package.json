@@ -51,8 +51,8 @@
     },
     "dependencies": {
         "@koa/cors": "^3.1.0",
-        "@masx200/koa-range": "^1.0.4",
-        "@masx200/koa-stream-etag": "^5.0.3",
+        "@masx200/koa-range": "^1.0.5",
+        "@masx200/koa-stream-etag": "^5.0.6",
         "@masx200/serve-cli": "^1.2.0",
         "builtin-modules": "^3.2.0",
         "etag": "^1.8.1",
@@ -82,5 +82,6 @@
     "resolutions": {
         "debug": "4.3.2",
         "object-path": "0.11.8"
-    }
+    },
+    "packageManager": "yarn@3.2.0"
 }
