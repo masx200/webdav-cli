@@ -67,7 +67,7 @@
         "koa-static": "^5.0.0",
         "koa2-serve-index": "^2.0.1",
         "minimist": "^1.2.5",
-        "rollup-plugin-node-externals": "^2.2.0",
+        "rollup-plugin-node-externals": "^4.0.0",
         "webdav-server": "^2.6.2"
     },
     "directories": {
