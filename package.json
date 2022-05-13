@@ -24,7 +24,7 @@
         "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md"
     },
     "devDependencies": {
-        "@rollup/plugin-commonjs": "^20.0.0",
+        "@rollup/plugin-commonjs": "^22.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.4",
         "@types/etag": "^1.8.0",
