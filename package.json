@@ -53,7 +53,7 @@
     "dependencies": {
         "@koa/cors": "^3.1.0",
         "@masx200/koa-range": "^1.0.5",
-        "@masx200/koa-stream-etag": "^5.0.6",
+        "@masx200/koa-stream-etag": "^5.0.8",
         "@masx200/serve-cli": "^1.2.0",
         "etag": "^1.8.1",
         "fresh": "^0.5.2",

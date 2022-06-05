@@ -66,12 +66,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@masx200/koa-stream-etag@npm:^5.0.3, @masx200/koa-stream-etag@npm:^5.0.6":
+"@masx200/koa-stream-etag@npm:^5.0.3":
   version: 5.0.7
   resolution: "@masx200/koa-stream-etag@npm:5.0.7"
   dependencies:
     etag: ^1.8.1
   checksum: f1ee982497affcf76fd1e6c0b3f788cafcc1798d8b88d96ebfebf48fba692bd368f2ed7f7e0e21174b1f56fd3a0170ecc6c6c1144597209a803fc073428d83f2
+  languageName: node
+  linkType: hard
+
+"@masx200/koa-stream-etag@npm:^5.0.8":
+  version: 5.0.8
+  resolution: "@masx200/koa-stream-etag@npm:5.0.8"
+  dependencies:
+    etag: ^1.8.1
+  checksum: 172f6d52a5c4cd80d07e7d9e93e98c47cb0b3829b951c8893192924bf02b41f3bdced3f2818dfde8d38691adb54f845bb7e38c83fa2925e9abbef062b0c0cf70
   languageName: node
   linkType: hard
 
@@ -102,7 +111,7 @@ __metadata:
   dependencies:
     "@koa/cors": ^3.1.0
     "@masx200/koa-range": ^1.0.5
-    "@masx200/koa-stream-etag": ^5.0.6
+    "@masx200/koa-stream-etag": ^5.0.8
     "@masx200/serve-cli": ^1.2.0
     "@rollup/plugin-commonjs": ^22.0.0
     "@rollup/plugin-json": ^4.1.0
