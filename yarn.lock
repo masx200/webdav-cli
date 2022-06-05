@@ -39,21 +39,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@koa/cors@npm:^3.1.0":
+"@koa/cors@npm:^3.1.0, @koa/cors@npm:^3.3.0":
   version: 3.3.0
   resolution: "@koa/cors@npm:3.3.0"
   dependencies:
     vary: ^1.1.2
   checksum: bb49c680e0d151aec1b19c24c14d61b65f430eb379e63d83789602cc7d8e52706ebcd74867cdb60b1d50ddb6f3d59be04e1c46328fae5721aeaf50e0d4fc2d28
-  languageName: node
-  linkType: hard
-
-"@masx200/koa-range@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@masx200/koa-range@npm:1.0.4"
-  dependencies:
-    stream-slice: ^0.1.2
-  checksum: cbd1a77f84d5394c4ca423fc3104a5cda585296ef6a962ab0e668758d1f2d9f3c3e80fee0390214d23e0ff9cbad39083716ee7342a41493aa2e217b627a2908e
   languageName: node
   linkType: hard
 
@@ -66,15 +57,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@masx200/koa-stream-etag@npm:^5.0.3":
-  version: 5.0.7
-  resolution: "@masx200/koa-stream-etag@npm:5.0.7"
-  dependencies:
-    etag: ^1.8.1
-  checksum: f1ee982497affcf76fd1e6c0b3f788cafcc1798d8b88d96ebfebf48fba692bd368f2ed7f7e0e21174b1f56fd3a0170ecc6c6c1144597209a803fc073428d83f2
-  languageName: node
-  linkType: hard
-
 "@masx200/koa-stream-etag@npm:^5.0.8":
   version: 5.0.8
   resolution: "@masx200/koa-stream-etag@npm:5.0.8"
@@ -84,15 +66,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@masx200/serve-cli@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@masx200/serve-cli@npm:1.2.0"
+"@masx200/serve-cli@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@masx200/serve-cli@npm:1.2.1"
   dependencies:
-    "@koa/cors": ^3.1.0
-    "@masx200/koa-range": 1.0.4
-    "@masx200/koa-stream-etag": ^5.0.3
-    koa: ^2.13.1
-    koa-compress: ^5.0.1
+    "@koa/cors": ^3.3.0
+    "@masx200/koa-range": ^1.0.5
+    "@masx200/koa-stream-etag": ^5.0.8
+    koa: ^2.13.4
+    koa-compress: ^5.1.0
     koa-conditional-get: ^3.0.0
     koa-etag: ^4.0.0
     koa-logger: ^3.2.1
@@ -101,7 +83,7 @@ __metadata:
     minimist: ^1.2.5
   bin:
     serve-cli: cli.js
-  checksum: c699c12a5c55eadcfc422aee4977f1fbe0cbed299806566bd0e6212649252ba78fcec13a421eef318e928059837a9766485712a2381d0f4f240f457f20442766
+  checksum: c57df07fc5b88ed85266081e12b37a8efb18ee327b5bc42580e7b8679b27b5405ca885dc06ed28829509e566cfb312174efb1337de5691baa8bfa60de01f372b
   languageName: node
   linkType: hard
 
@@ -112,7 +94,7 @@ __metadata:
     "@koa/cors": ^3.1.0
     "@masx200/koa-range": ^1.0.5
     "@masx200/koa-stream-etag": ^5.0.8
-    "@masx200/serve-cli": ^1.2.0
+    "@masx200/serve-cli": ^1.2.1
     "@rollup/plugin-commonjs": ^22.0.0
     "@rollup/plugin-json": ^4.1.0
     "@rollup/plugin-node-resolve": ^13.0.4
@@ -1610,7 +1592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-compress@npm:^5.0.1":
+"koa-compress@npm:^5.0.1, koa-compress@npm:^5.1.0":
   version: 5.1.0
   resolution: "koa-compress@npm:5.1.0"
   dependencies:
@@ -1706,7 +1688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa@npm:^2.13.1":
+"koa@npm:^2.13.1, koa@npm:^2.13.4":
   version: 2.13.4
   resolution: "koa@npm:2.13.4"
   dependencies:
