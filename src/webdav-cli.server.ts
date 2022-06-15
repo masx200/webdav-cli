@@ -159,7 +159,7 @@ export class WebdavCli {
                 server.beforeRequest(auth_middle);
             }
         } else {
-            server.afterRequest((ctx, next) => {
+            server.beforeRequest((ctx, next) => {
                 const readonly_methods = ["GET", "HEAD", "PROPFIND", "OPTIONS"];
                 if (
                     ctx.request.method &&
