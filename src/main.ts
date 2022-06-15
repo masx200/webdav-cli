@@ -36,9 +36,12 @@ export async function main(argv: Partial<minimist.ParsedArgs>) {
             process.env.WEBDAV_CLI_DISABLE_AUTHENTICATION ||
             argv.da,
         rights: argvRights || envRights,
-        methodsWithoutAuthentication: argv.methodsWithoutAuthentication
-            ? String(argv.methodsWithoutAuthentication).split(",")
-            : undefined,
+        methodsWithoutAuthentication:
+            "string" === typeof argv.methodsWithoutAuthentication
+                ? String(argv.methodsWithoutAuthentication).split(",")
+                : Array.isArray(argv.methodsWithoutAuthentication)
+                ? argv.methodsWithoutAuthentication
+                : undefined,
     };
     process.on("unhandledRejection", (e) => {
         console.error(e);

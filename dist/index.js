@@ -48,7 +48,7 @@ function p(e) {
 
 const m = t(n(import.meta.url));
 
-class g {
+class A {
     config;
     server;
     #e;
@@ -66,7 +66,7 @@ class g {
     #t(t) {
         const n = s(m, "/../certs/self-signed.key.pem"), o = s(m, "/../certs/self-signed.cert.pem"), i = t.path || process.cwd(), r = t.host || "0.0.0.0", a = t.port || 1900, c = Boolean(t.digest);
         let h = (t.username || p(16)).toString(), l = (t.password || p(16)).toString();
-        const d = Boolean(t.ssl), g = d ? e.readFileSync(t.sslKey || n).toString() : "", A = d ? e.readFileSync(t.sslCert || o).toString() : "", f = Boolean(t.disableAuthentication);
+        const d = Boolean(t.ssl), A = d ? e.readFileSync(t.sslKey || n).toString() : "", g = d ? e.readFileSync(t.sslCert || o).toString() : "", f = Boolean(t.disableAuthentication);
         f && (t.rights = t.rights || [ "canRead" ], h = "", l = "");
         const _ = (t.rights || [ "all" ]).filter((e => u.includes(e))), S = `${d ? "https" : "http"}://${r}:${a}`;
         return {
@@ -78,8 +78,8 @@ class g {
             digest: c,
             password: l,
             ssl: d,
-            sslCert: A,
-            sslKey: g,
+            sslCert: g,
+            sslKey: A,
             rights: _,
             url: S,
             disableAuthentication: f
@@ -160,7 +160,7 @@ class g {
     }
 }
 
-async function A(e) {
+async function g(e) {
     console.log("webdav-cli", "\n"), (e.help || e.h) && (console.log([ "usage: webdav-cli [options]", "", "options:", "  --path,-pa        Path to folder [process.cwd()]", "  --host,-ho         Host to use [0.0.0.0]", "  --port,-po       Port to use [1900]", "  --digest,-dg     Enable digest authentication [basic]", "  --username,-u   Username for basic/digest authentication [random]", "  --password,-ps   Password for basic/digest authentication [random]", "  --disableAuthentication,-da  The server file becomes read-only without Authentication.[false]", "  --ssl,-s        Enable https [false]", "  --methodsWithoutAuthentication          methods Without Authentication[undefined]", "  --sslKey     Path to ssl key file [self-signed]", "  --sslCert    Path to ssl cert file [self-signed]", "  --help,-h       Print this list and exit", "  --rights,-r     Comma separated values without spaces [all]", "\n    'all', 'canCreate', 'canDelete', 'canMove', 'canRename', \n    'canAppend', 'canWrite', 'canRead', 'canSource', \n    'canGetMimeType', 'canGetSize', 'canListLocks', \n    'canSetLock', 'canRemoveLock', 'canGetAvailableLocks', \n    'canGetLock', 'canAddChild', 'canRemoveChild', \n    'canGetChildren', 'canSetProperty', 'canGetProperty', \n    'canGetProperties', 'canRemoveProperty', 'canGetCreationDate', \n    'canGetLastModifiedDate', 'canGetWebName', 'canGetType'", "", "env:", "  WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,", "  WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,", "  WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,", "  WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS", "  WEBDAV_CLI_DISABLE_AUTHENTICATION", "" ].join("\n")), 
     l.exit());
     const t = e.rights || e.r, s = t && "string" == typeof t ? t.split(",") : void 0, n = l.env.WEBDAV_CLI_RIGHTS ? l.env.WEBDAV_CLI_RIGHTS.split(",") : void 0, o = {
@@ -175,16 +175,16 @@ async function A(e) {
         sslCert: e.sslCert || l.env.WEBDAV_CLI_SSL_CERT,
         disableAuthentication: e.disableAuthentication || l.env.WEBDAV_CLI_DISABLE_AUTHENTICATION || e.da,
         rights: s || n,
-        methodsWithoutAuthentication: e.methodsWithoutAuthentication ? String(e.methodsWithoutAuthentication).split(",") : void 0
+        methodsWithoutAuthentication: "string" == typeof e.methodsWithoutAuthentication ? String(e.methodsWithoutAuthentication).split(",") : Array.isArray(e.methodsWithoutAuthentication) ? e.methodsWithoutAuthentication : void 0
     };
     l.on("unhandledRejection", (e => {
         throw console.error(e), e;
     }));
     return await (async () => {
-        const e = new g(o);
+        const e = new A(o);
         return await e.start(), e;
     })();
 }
 
-export { u as RIGHTS, g as WebdavCli, p as getRandomString, A as main };
+export { u as RIGHTS, A as WebdavCli, p as getRandomString, g as main };
 //# sourceMappingURL=index.js.map

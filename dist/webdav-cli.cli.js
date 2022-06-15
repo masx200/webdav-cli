@@ -177,7 +177,7 @@ class A {
         sslCert: t.sslCert || e.env.WEBDAV_CLI_SSL_CERT,
         disableAuthentication: t.disableAuthentication || e.env.WEBDAV_CLI_DISABLE_AUTHENTICATION || t.da,
         rights: n || o,
-        methodsWithoutAuthentication: t.methodsWithoutAuthentication ? String(t.methodsWithoutAuthentication).split(",") : void 0
+        methodsWithoutAuthentication: "string" == typeof t.methodsWithoutAuthentication ? String(t.methodsWithoutAuthentication).split(",") : Array.isArray(t.methodsWithoutAuthentication) ? t.methodsWithoutAuthentication : void 0
     };
     return e.on("unhandledRejection", (e => {
         throw console.error(e), e;
