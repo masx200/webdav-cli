@@ -1,11 +1,11 @@
-{  "version": "3.0.1",
+{
+    "version": "3.0.1",
     "type": "module",
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.com"
     },
     "name": "@masx200/webdav-cli",
-  
     "description": "A simple zero-configuration command-line webdav server",
     "license": "MIT",
     "keywords": [
