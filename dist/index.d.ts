@@ -16,6 +16,10 @@ interface WebdavCliConfig {
     url?: string;
     methodsWithoutAuthentication?: string[];
 }
+interface WebdavCliServer extends webdav.WebDAVServer {
+    config: WebdavCliConfig;
+}
+declare const RIGHTS: WebdavCliRights;
 declare class WebdavCli {
     config: WebdavCliConfig;
     server: webdav.WebDAVServer;
@@ -27,4 +31,5 @@ declare class WebdavCli {
     start(): Promise<void>;
 }
 type HTTPRequestContext = webdav.HTTPRequestContext;
-export { WebdavCli, HTTPRequestContext };
+declare function getRandomString(length: number): string;
+export { RIGHTS, WebdavCliRights, WebdavCliConfig, WebdavCliServer, WebdavCli, HTTPRequestContext, getRandomString };
