@@ -17,20 +17,20 @@ const __dirname = dirname(__filename);
 export class WebdavCli {
     config: WebdavCliConfig;
     server: webdav.WebDAVServer;
-    auth_middle: (ctx: webdav.HTTPRequestContext, next: () => void) => void;
+    #auth_middle: (ctx: webdav.HTTPRequestContext, next: () => void) => void;
     constructor(config: Partial<WebdavCliConfig>) {
-        this.config = this.getConfig(config);
-        const authentication = this.get_authentication(this.config);
+        this.config = this.#getConfig(config);
+        const authentication = this.#get_authentication(this.config);
         const auth_middle = createhttpauthmiddle(
             this.config.username,
             this.config.password,
             authentication,
         );
-        this.auth_middle = auth_middle;
-        this.server = this.init();
+        this.#auth_middle = auth_middle;
+        this.server = this.#init();
     }
 
-    getConfig(config: Partial<WebdavCliConfig>): WebdavCliConfig {
+    #getConfig(config: Partial<WebdavCliConfig>): WebdavCliConfig {
         const selfSignedKey = join(__dirname, "/../certs/self-signed.key.pem");
         const selfSignedCert = join(
             __dirname,
@@ -83,7 +83,7 @@ export class WebdavCli {
         };
     }
 
-    init(): webdav.WebDAVServer {
+    #init(): webdav.WebDAVServer {
         const config = this.config;
 
         const userManager = new webdav.SimpleUserManager();
@@ -97,6 +97,7 @@ export class WebdavCli {
         privilegeManager.setRights(user, "/", config.rights);
 
         const options = {
+            requireAuthentification: false,
             httpAuthentication:
                 // config.disableAuthentication
                 // ?
@@ -138,7 +139,7 @@ export class WebdavCli {
 
         server.beforeRequest(beforelogger());
         if (!config.disableAuthentication) {
-            const auth_middle = this.auth_middle;
+            const auth_middle = this.#auth_middle;
             if (
                 Array.isArray(this.config.methodsWithoutAuthentication) &&
                 this.config.methodsWithoutAuthentication.length
@@ -178,7 +179,7 @@ export class WebdavCli {
 
         return server;
     }
-    get_authentication(config: WebdavCliConfig) {
+    #get_authentication(config: WebdavCliConfig) {
         return config.digest
             ? "HTTPDigestAuthentication"
             : "HTTPBasicAuthentication";

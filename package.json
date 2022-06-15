@@ -20,6 +20,7 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
+        "test": "vitest run",
         "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0",
         "build": " rollup -c rollup.config.mjs",
         "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md *.mjs"
@@ -50,7 +51,9 @@
         "rollup-plugin-terser": "^7.0.2",
         "rollup-plugin-ts": "^3.0.2",
         "tsconfig-paths": "^4.0.0",
-        "typescript": "^4.7.3"
+        "typescript": "^4.7.3",
+        "undici": "^5.5.1",
+        "vitest": "^0.15.0"
     },
     "dependencies": {
         "@koa/cors": "^3.1.0",
