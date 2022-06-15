@@ -106,7 +106,7 @@ class p {
         if (i.beforeRequest((async (e, t) => {
             const {url: s, headers: n, method: r} = e.request;
             console.log(">> ", r, s, n), t();
-        })), e.disableAuthentication) i.afterRequest(((e, t) => {
+        })), e.disableAuthentication) i.beforeRequest(((e, t) => {
             e.request.method && [ "GET", "HEAD", "PROPFIND", "OPTIONS" ].includes(e.request.method) ? t() : (e.setCode(405), 
             e.exit());
         })); else {
