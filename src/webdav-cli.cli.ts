@@ -35,6 +35,9 @@ const config = {
         process.env.WEBDAV_CLI_DISABLE_AUTHENTICATION ||
         argv.da,
     rights: argvRights || envRights,
+    methodsWithoutAuthentication: argv.methodsWithoutAuthentication
+        ? String(argv.methodsWithoutAuthentication).split(",")
+        : undefined,
 };
 const run = async () => {
     //@ts-ignore

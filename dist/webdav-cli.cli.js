@@ -7,11 +7,11 @@ import s from "fs";
 
 import { dirname as n, join as o } from "path";
 
-import { fileURLToPath as r } from "url";
+import { fileURLToPath as i } from "url";
 
-import { v2 as a } from "webdav-server";
+import { v2 as r } from "webdav-server";
 
-import i from "http-auth";
+import a from "http-auth";
 
 import c from "http-auth/src/auth/utils.js";
 
@@ -19,17 +19,17 @@ import l from "koa";
 
 import h from "koa-logger";
 
-import { loadcoremiddles as p } from "@masx200/serve-cli";
+import { loadcoremiddles as u } from "@masx200/serve-cli";
 
 function d(e) {
     const t = "Default realm", s = "HTTPBasicAuthentication" === e.authentication ? function(e, t, s) {
-        return i.basic({
+        return a.basic({
             realm: e
         }, ((e, n, o) => {
             o(e === t && n === s);
         }));
     }(t, e.user, e.pass) : function(e, t, s) {
-        return i.digest({
+        return a.digest({
             realm: e
         }, ((n, o) => {
             n === t ? o(c.md5(`${n}:${e}:${s}`)) : o();
@@ -42,44 +42,55 @@ function d(e) {
     };
 }
 
-const u = [ "all", "canCreate", "canDelete", "canMove", "canRename", "canAppend", "canWrite", "canRead", "canSource", "canGetMimeType", "canGetSize", "canListLocks", "canSetLock", "canRemoveLock", "canGetAvailableLocks", "canGetLock", "canAddChild", "canRemoveChild", "canGetChildren", "canSetProperty", "canGetProperty", "canGetProperties", "canRemoveProperty", "canGetCreationDate", "canGetLastModifiedDate", "canGetWebName", "canGetType" ];
+const p = [ "all", "canCreate", "canDelete", "canMove", "canRename", "canAppend", "canWrite", "canRead", "canSource", "canGetMimeType", "canGetSize", "canListLocks", "canSetLock", "canRemoveLock", "canGetAvailableLocks", "canGetLock", "canAddChild", "canRemoveChild", "canGetChildren", "canSetProperty", "canGetProperty", "canGetProperties", "canRemoveProperty", "canGetCreationDate", "canGetLastModifiedDate", "canGetWebName", "canGetType" ];
 
 function m(e) {
     return [ ...Array(Math.ceil(e / 8)) ].map((() => Math.random().toString(36).slice(-8))).join("").slice(-e);
 }
 
-const g = n(r(import.meta.url));
+const g = n(i(import.meta.url));
 
 class A {
     config;
     server;
+    auth_middle;
     constructor(e) {
-        this.config = this.getConfig(e), this.server = this.init();
+        this.config = this.getConfig(e);
+        const t = this.get_authentication(this.config), s = function(e, t, s) {
+            return d({
+                user: e,
+                pass: t,
+                authentication: s
+            });
+        }(this.config.username, this.config.password, t);
+        this.auth_middle = s, this.server = this.init();
     }
     getConfig(e) {
-        const t = o(g, "/../certs/self-signed.key.pem"), n = o(g, "/../certs/self-signed.cert.pem"), r = e.path || process.cwd(), a = e.host || "0.0.0.0", i = e.port || 1900, c = Boolean(e.digest);
+        const t = o(g, "/../certs/self-signed.key.pem"), n = o(g, "/../certs/self-signed.cert.pem"), i = e.path || process.cwd(), r = e.host || "0.0.0.0", a = e.port || 1900, c = Boolean(e.digest);
         let l = (e.username || m(16)).toString(), h = (e.password || m(16)).toString();
-        const p = Boolean(e.ssl), d = p ? s.readFileSync(e.sslKey || t).toString() : "", A = p ? s.readFileSync(e.sslCert || n).toString() : "", f = Boolean(e.disableAuthentication);
+        const u = Boolean(e.ssl), d = u ? s.readFileSync(e.sslKey || t).toString() : "", A = u ? s.readFileSync(e.sslCert || n).toString() : "", f = Boolean(e.disableAuthentication);
         f && (e.rights = e.rights || [ "canRead" ], l = "", h = "");
+        const _ = (e.rights || [ "all" ]).filter((e => p.includes(e))), S = `${u ? "https" : "http"}://${r}:${a}`;
         return {
-            host: a,
-            path: r,
-            port: i,
+            ...e,
+            host: r,
+            path: i,
+            port: a,
             username: l,
             digest: c,
             password: h,
-            ssl: p,
+            ssl: u,
             sslCert: A,
             sslKey: d,
-            rights: (e.rights || [ "all" ]).filter((e => u.includes(e))),
-            url: `${p ? "https" : "http"}://${a}:${i}`,
+            rights: _,
+            url: S,
             disableAuthentication: f
         };
     }
     init() {
-        const e = this.config, t = new a.SimpleUserManager, s = t.addUser(e.username, e.password, !1), n = new a.SimplePathPrivilegeManager;
+        const e = this.config, t = new r.SimpleUserManager, s = t.addUser(e.username, e.password, !1), n = new r.SimplePathPrivilegeManager;
         n.setRights(s, "/", e.rights);
-        const o = e.digest ? "HTTPDigestAuthentication" : "HTTPBasicAuthentication", r = {
+        const o = {
             httpAuthentication: {
                 askForAuthentication: () => ({}),
                 getUser: (s, o) => {
@@ -91,49 +102,52 @@ class A {
             port: e.port,
             hostname: e.host
         };
-        e.ssl && Reflect.set(r, "https", {
+        e.ssl && Reflect.set(o, "https", {
             cert: e.sslCert,
             key: e.sslKey
         });
-        const i = new a.WebDAVServer(r);
-        return i.beforeRequest((async (e, t) => {
+        const i = new r.WebDAVServer(o);
+        if (i.beforeRequest((async (e, t) => {
             const {url: s, headers: n, method: o} = e.request;
             console.log(">> ", o, s, n), t();
-        })), e.disableAuthentication || i.beforeRequest(function(e, t, s) {
-            return d({
-                user: e,
-                pass: t,
-                authentication: s
-            });
-        }(e.username, e.password, o)), i.beforeRequest(((e, t) => {
+        })), !e.disableAuthentication) {
+            const e = this.auth_middle;
+            Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? i.beforeRequest(((t, s) => {
+                t.request.method && this.config.methodsWithoutAuthentication?.includes(t.request.method) ? s() : e(t, s);
+            })) : i.beforeRequest(e);
+        }
+        return i.beforeRequest(((e, t) => {
             const {headers: s, method: n} = e.request, {depth: o} = s;
             "PROPFIND" === n && "0" !== o && "1" !== o ? (e.setCode(403), e.exit()) : t();
         })), i.beforeRequest(function(e) {
             const t = new l;
-            t.use(h()), p(t, e, !1);
+            t.use(h()), u(t, e, !1);
             const s = t.callback();
             return function(e, t) {
-                const {request: n, response: o} = e, [r, a] = [ n, o ];
+                const {request: n, response: o} = e, [i, r] = [ n, o ];
                 if (e.request.method && ![ "GET", "HEAD" ].includes(e.request.method)) return t();
-                s(r, a);
+                s(i, r);
             };
         }(e.path)), i.afterRequest(((e, t) => {
             const s = `>> ${e.request.method} ${e.requested.uri} > ${e.response.statusCode} `;
             console.log(s), t();
         })), i;
     }
+    get_authentication(e) {
+        return e.digest ? "HTTPDigestAuthentication" : "HTTPBasicAuthentication";
+    }
     async start() {
         const e = this.config, {server: t} = this;
         console.log(Object.fromEntries(Object.entries(e).filter((([e]) => ![ "sslKey", "sslCert" ].includes(e))))), 
-        await t.setFileSystemAsync("/", new a.PhysicalFileSystem(e.path));
+        await t.setFileSystemAsync("/", new r.PhysicalFileSystem(e.path));
         const s = [ `Server running at ${e.url}`, "Hit CTRL-C to stop the server", "Run with --help to print help" ];
         let n;
         console.log(s.join("\n")), Object.defineProperty(t, "server", {
             get: () => n,
-            set(e) {
-                n = e, n && (n.on("error", (e => {
-                    if ("EADDRINUSE" === Reflect.get(e, "code")) return console.error(e), void n?.listen(Math.round(65535 * Math.random()));
-                    throw e;
+            set(t) {
+                n = t, n && (n.on("error", (t => {
+                    if ("EADDRINUSE" === Reflect.get(t, "code")) return console.error(t), void n?.listen(Math.round(65535 * Math.random()), e.host);
+                    throw t;
                 })), n.on("listening", (() => {
                     console.log("Server listening on " + JSON.stringify(n?.address()));
                 })));
@@ -146,10 +160,10 @@ class A {
 
 const f = t(e.argv.slice(2));
 
-console.log("webdav-cli", "\n"), (f.help || f.h) && (console.log([ "usage: webdav-cli [options]", "", "options:", "  --path,-pa        Path to folder [process.cwd()]", "  --host,-ho         Host to use [0.0.0.0]", "  --port,-po       Port to use [1900]", "  --digest,-dg     Enable digest authentication [basic]", "  --username,-u   Username for basic/digest authentication [random]", "  --password,-ps   Password for basic/digest authentication [random]", "  --disableAuthentication,-da  The server file becomes read-only without Authentication.[false]", "  --ssl,-s        Enable https [false]", "  --sslKey     Path to ssl key file [self-signed]", "  --sslCert    Path to ssl cert file [self-signed]", "  --help,-h       Print this list and exit", "  --rights,-r     Comma separated values without spaces [all]", "\n    'all', 'canCreate', 'canDelete', 'canMove', 'canRename', \n    'canAppend', 'canWrite', 'canRead', 'canSource', \n    'canGetMimeType', 'canGetSize', 'canListLocks', \n    'canSetLock', 'canRemoveLock', 'canGetAvailableLocks', \n    'canGetLock', 'canAddChild', 'canRemoveChild', \n    'canGetChildren', 'canSetProperty', 'canGetProperty', \n    'canGetProperties', 'canRemoveProperty', 'canGetCreationDate', \n    'canGetLastModifiedDate', 'canGetWebName', 'canGetType'", "", "env:", "  WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,", "  WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,", "  WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,", "  WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS", "  WEBDAV_CLI_DISABLE_AUTHENTICATION", "" ].join("\n")), 
+console.log("webdav-cli", "\n"), (f.help || f.h) && (console.log([ "usage: webdav-cli [options]", "", "options:", "  --path,-pa        Path to folder [process.cwd()]", "  --host,-ho         Host to use [0.0.0.0]", "  --port,-po       Port to use [1900]", "  --digest,-dg     Enable digest authentication [basic]", "  --username,-u   Username for basic/digest authentication [random]", "  --password,-ps   Password for basic/digest authentication [random]", "  --disableAuthentication,-da  The server file becomes read-only without Authentication.[false]", "  --ssl,-s        Enable https [false]", "  --methodsWithoutAuthentication          methods Without Authentication[undefined]", "  --sslKey     Path to ssl key file [self-signed]", "  --sslCert    Path to ssl cert file [self-signed]", "  --help,-h       Print this list and exit", "  --rights,-r     Comma separated values without spaces [all]", "\n    'all', 'canCreate', 'canDelete', 'canMove', 'canRename', \n    'canAppend', 'canWrite', 'canRead', 'canSource', \n    'canGetMimeType', 'canGetSize', 'canListLocks', \n    'canSetLock', 'canRemoveLock', 'canGetAvailableLocks', \n    'canGetLock', 'canAddChild', 'canRemoveChild', \n    'canGetChildren', 'canSetProperty', 'canGetProperty', \n    'canGetProperties', 'canRemoveProperty', 'canGetCreationDate', \n    'canGetLastModifiedDate', 'canGetWebName', 'canGetType'", "", "env:", "  WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,", "  WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,", "  WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,", "  WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS", "  WEBDAV_CLI_DISABLE_AUTHENTICATION", "" ].join("\n")), 
 e.exit());
 
-const _ = f.rights || f.r, C = _ && "string" == typeof _ ? _.split(",") : void 0, S = e.env.WEBDAV_CLI_RIGHTS ? e.env.WEBDAV_CLI_RIGHTS.split(",") : void 0, L = {
+const _ = f.rights || f.r, S = _ && "string" == typeof _ ? _.split(",") : void 0, C = e.env.WEBDAV_CLI_RIGHTS ? e.env.WEBDAV_CLI_RIGHTS.split(",") : void 0, L = {
     path: f.path || e.env.WEBDAV_CLI_PATH || f.pa,
     host: f.host || e.env.WEBDAV_CLI_HOST || f.ho,
     port: Number(f.port || f.po) || parseInt(String(e.env.WEBDAV_CLI_PORT)),
@@ -160,7 +174,8 @@ const _ = f.rights || f.r, C = _ && "string" == typeof _ ? _.split(",") : void 0
     sslKey: f.sslKey || e.env.WEBDAV_CLI_SSL_KEY,
     sslCert: f.sslCert || e.env.WEBDAV_CLI_SSL_CERT,
     disableAuthentication: f.disableAuthentication || e.env.WEBDAV_CLI_DISABLE_AUTHENTICATION || f.da,
-    rights: C || S
+    rights: S || C,
+    methodsWithoutAuthentication: f.methodsWithoutAuthentication ? String(f.methodsWithoutAuthentication).split(",") : void 0
 };
 
 (async () => {

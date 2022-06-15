@@ -55,6 +55,7 @@ options:
 
   --disableAuthentication,-da  The server file becomes read-only without Authentication.[false]
   --ssl,-s        Enable https [false]
+  --methodsWithoutAuthentication          methods Without Authentication[undefined]
   --sslKey     Path to ssl key file [self-signed]
   --sslCert    Path to ssl cert file [self-signed]
   --help,-h       Print this list and exit
@@ -92,3 +93,13 @@ Then you need to run the server with `--ssl` for enabling SSL and `--sslKey=key.
 ## License
 
 MIT
+
+# changelog
+
+2022 年 6 月 15 日 10:12:28
+
+添加了可选参数 `methodsWithoutAuthentication`,可以允许某些方法不需要身份验证,例如:
+
+```
+'--methodsWithoutAuthentication=GET,HEAD,PROPFIND'
+```

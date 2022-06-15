@@ -3,9 +3,10 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import { defineConfig } from "rollup";
-import externals from "rollup-plugin-node-externals";
+// import externals from "rollup-plugin-node-externals";
 import { terser } from "rollup-plugin-terser";
 import ts from "rollup-plugin-ts";
+import rollupExternalModules from "rollup-external-modules";
 const banner = `#!/usr/bin/env node`;
 const terserplugin = terser({
     compress: {
@@ -22,22 +23,23 @@ const terserplugin = terser({
 });
 export default defineConfig([
     {
-        external: [
-            "minimist",
-            "koa",
-            "webdav-server",
-            "depd",
-            "bluebird",
-            "@masx200/serve-cli",
-            "http-auth",
-            "process",
-            "net",
-            "koa-logger",
-            "url",
-            "http",
-            "https",
-            "http-auth/src/auth/utils.js",
-        ],
+        external: rollupExternalModules,
+        // external: [
+        //     "minimist",
+        //     "koa",
+        //     "webdav-server",
+        //     "depd",
+        //     "bluebird",
+        //     "@masx200/serve-cli",
+        //     "http-auth",
+        //     "process",
+        //     "net",
+        //     "koa-logger",
+        //     "url",
+        //     "http",
+        //     "https",
+        //     "http-auth/src/auth/utils.js",
+        // ],
         input: "./src/webdav-cli.cli.ts",
         output: [
             {
@@ -48,13 +50,55 @@ export default defineConfig([
             },
         ],
         plugins: [
-            externals({
-                builtins: true,
-                deps: true,
-                devDeps: true,
-                peerDeps: true,
-                optDeps: true,
-            }),
+            // externals({
+            //     builtins: true,
+            //     deps: true,
+            //     devDeps: true,
+            //     peerDeps: true,
+            //     optDeps: true,
+            // }),
+            ts(),
+            resolve(),
+            commonjs(),
+            terserplugin,
+            json(),
+        ],
+    },
+    {
+        external: rollupExternalModules,
+        // external: [
+        //     "minimist",
+        //     "koa",
+        //     "webdav-server",
+        //     "depd",
+        //     "bluebird",
+        //     "@masx200/serve-cli",
+        //     "http-auth",
+        //     "process",
+        //     "net",
+        //     "koa-logger",
+        //     "url",
+        //     "http",
+        //     "https",
+        //     "http-auth/src/auth/utils.js",
+        // ],
+        input: "./src/index.ts",
+        output: [
+            {
+                banner,
+                sourcemap: true,
+                file: "./dist/index.js",
+                format: "esm",
+            },
+        ],
+        plugins: [
+            // externals({
+            //     builtins: true,
+            //     deps: true,
+            //     devDeps: true,
+            //     peerDeps: true,
+            //     optDeps: true,
+            // }),
             ts(),
             resolve(),
             commonjs(),

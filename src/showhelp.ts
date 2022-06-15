@@ -13,6 +13,7 @@ export function showhelp() {
             "  --password,-ps   Password for basic/digest authentication [random]",
             "  --disableAuthentication,-da  The server file becomes read-only without Authentication.[false]",
             "  --ssl,-s        Enable https [false]",
+            "  --methodsWithoutAuthentication          methods Without Authentication[undefined]",
             "  --sslKey     Path to ssl key file [self-signed]",
             "  --sslCert    Path to ssl cert file [self-signed]",
             "  --help,-h       Print this list and exit",

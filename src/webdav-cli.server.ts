@@ -17,8 +17,16 @@ const __dirname = dirname(__filename);
 export class WebdavCli {
     config: WebdavCliConfig;
     server: webdav.WebDAVServer;
+    auth_middle: (ctx: webdav.HTTPRequestContext, next: () => void) => void;
     constructor(config: Partial<WebdavCliConfig>) {
         this.config = this.getConfig(config);
+        const authentication = this.get_authentication(this.config);
+        const auth_middle = createhttpauthmiddle(
+            this.config.username,
+            this.config.password,
+            authentication,
+        );
+        this.auth_middle = auth_middle;
         this.server = this.init();
     }
 
@@ -59,6 +67,7 @@ export class WebdavCli {
         const url = `${ssl ? "https" : "http"}://${host}:${port}`;
 
         return {
+            ...config,
             host,
             path,
             port,
@@ -87,9 +96,6 @@ export class WebdavCli {
         const privilegeManager = new webdav.SimplePathPrivilegeManager();
         privilegeManager.setRights(user, "/", config.rights);
 
-        const authentication = config.digest
-            ? "HTTPDigestAuthentication"
-            : "HTTPBasicAuthentication";
         const options = {
             httpAuthentication:
                 // config.disableAuthentication
@@ -132,13 +138,26 @@ export class WebdavCli {
 
         server.beforeRequest(beforelogger());
         if (!config.disableAuthentication) {
-            server.beforeRequest(
-                createhttpauthmiddle(
-                    config.username,
-                    config.password,
-                    authentication,
-                ),
-            );
+            const auth_middle = this.auth_middle;
+            if (
+                Array.isArray(this.config.methodsWithoutAuthentication) &&
+                this.config.methodsWithoutAuthentication.length
+            ) {
+                server.beforeRequest((ctx, next) => {
+                    if (
+                        ctx.request.method &&
+                        this.config.methodsWithoutAuthentication?.includes(
+                            ctx.request.method,
+                        )
+                    ) {
+                        next();
+                    } else {
+                        auth_middle(ctx, next);
+                    }
+                });
+            } else {
+                server.beforeRequest(auth_middle);
+            }
         }
         server.beforeRequest(propfindchecker());
         server.beforeRequest(koa_static_server(config.path));
@@ -146,6 +165,12 @@ export class WebdavCli {
 
         return server;
     }
+    get_authentication(config: WebdavCliConfig) {
+        return config.digest
+            ? "HTTPDigestAuthentication"
+            : "HTTPBasicAuthentication";
+    }
+
     async start() {
         const config = this.config;
         const { server } = this;
@@ -184,6 +209,7 @@ export class WebdavCli {
                         console.error(err);
                         rawhttpserver?.listen(
                             Math.round(Math.random() * 65535),
+                            config.host,
                         );
                         return;
                     } else {
