@@ -21,7 +21,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "vitest run",
-        "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0",
+        "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0 --path=index",
         "build": " rollup -c rollup.config.mjs",
         "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md *.mjs"
     },
