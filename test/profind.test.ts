@@ -4,7 +4,7 @@ import { main } from "../src/main";
 import assert from "assert";
 import { fetch } from "undici";
 
-test("DELETE-fail-index-file-disableAuthentication", async () => {
+test("propfind-ok-depth-0-disableAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
     const port = Math.floor(Math.random() * 65536);
     const host = "127.0.0.1";
@@ -18,88 +18,25 @@ test("DELETE-fail-index-file-disableAuthentication", async () => {
         password,
         disableAuthentication: true,
     });
+
     try {
-        const response = await fetch(`http://127.0.0.1:${port}/index.html`, {
-            method: "DELETE",
+        const response = await fetch(`http://127.0.0.1:${port}`, {
+            method: "PROPFIND",
             headers: {
-                // Authorization: "Basic " + btoa(username + ":" + password),
-            },
-        });
-        console.log(response);
-        assert(!response.ok);
-        assert.equal(response.status, 405);
-    } catch (error) {
-        throw error;
-    } finally {
-        await webdav.server.stopAsync();
-    }
-});
-test("post-fail-index-file-disableAuthentication", async () => {
-    const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
-    const host = "127.0.0.1";
-    const username = "root";
-    const password = "root";
-    const webdav = await main({
-        path,
-        port,
-        host,
-        username,
-        password,
-        disableAuthentication: true,
-    });
-    try {
-        const response = await fetch(`http://127.0.0.1:${port}/index.html`, {
-            method: "POST",
-            headers: {
-                // Authorization: "Basic " + btoa(username + ":" + password),
-            },
-        });
-        console.log(response);
-        assert(!response.ok);
-        assert.equal(response.status, 405);
-    } catch (error) {
-        throw error;
-    } finally {
-        await webdav.server.stopAsync();
-    }
-});
-test("get-ok-index-file-disableAuthentication", async () => {
-    const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
-    const host = "127.0.0.1";
-    const username = "root";
-    const password = "root";
-    const webdav = await main({
-        path,
-        port,
-        host,
-        username,
-        password,
-        disableAuthentication: true,
-    });
-    try {
-        const response = await fetch(`http://127.0.0.1:${port}/index.html`, {
-            method: "GET",
-            headers: {
+                depth: "0",
                 // Authorization: "Basic " + btoa(username + ":" + password),
             },
         });
         console.log(response);
         assert(response.ok);
-        assert.equal(response.status, 200);
-        const text = await response.text();
-        assert.equal(text, "hello world");
-        assert(response.headers.get("content-type")?.startsWith("text/html"));
-        // await webdav.server.stopAsync();
+        assert.equal(response.status, 207);
     } catch (error) {
         throw error;
     } finally {
         await webdav.server.stopAsync();
     }
 });
-
-test("get-Unauthorized", async () => {
+test("propfind-Unauthorized", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
     const port = Math.floor(Math.random() * 65536);
     const host = "127.0.0.1";
@@ -108,7 +45,7 @@ test("get-Unauthorized", async () => {
     const webdav = await main({ path, port, host, username, password });
     try {
         const response = await fetch(`http://127.0.0.1:${port}`, {
-            method: "GET",
+            method: "PROPFIND",
             headers: {},
         });
         console.log(response);
@@ -119,9 +56,9 @@ test("get-Unauthorized", async () => {
     } finally {
         await webdav.server.stopAsync();
     }
+    // await webdav.server.stopAsync();
 });
-
-test("get-ok-dir-index", async () => {
+test("propfind-Forbidden-no-depth", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
     const port = Math.floor(Math.random() * 65536);
     const host = "127.0.0.1";
@@ -130,17 +67,14 @@ test("get-ok-dir-index", async () => {
     const webdav = await main({ path, port, host, username, password });
     try {
         const response = await fetch(`http://127.0.0.1:${port}`, {
-            method: "GET",
+            method: "PROPFIND",
             headers: {
                 Authorization: "Basic " + btoa(username + ":" + password),
             },
         });
         console.log(response);
-        assert(response.ok);
-        assert.equal(response.status, 200);
-        const text = await response.text();
-        assert(text.startsWith("<!DOCTYPE html>"));
-        assert(text.endsWith("</html>"));
+        assert(!response.ok);
+        assert.equal(response.status, 403);
     } catch (error) {
         throw error;
     } finally {
@@ -148,7 +82,7 @@ test("get-ok-dir-index", async () => {
     }
     // await webdav.server.stopAsync();
 });
-test("get-ok-index-file", async () => {
+test("propfind-Forbidden-depth-2", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
     const port = Math.floor(Math.random() * 65536);
     const host = "127.0.0.1";
@@ -156,17 +90,66 @@ test("get-ok-index-file", async () => {
     const password = "root";
     const webdav = await main({ path, port, host, username, password });
     try {
-        const response = await fetch(`http://127.0.0.1:${port}/index.html`, {
-            method: "GET",
+        const response = await fetch(`http://127.0.0.1:${port}`, {
+            method: "PROPFIND",
             headers: {
+                depth: "2",
+                Authorization: "Basic " + btoa(username + ":" + password),
+            },
+        });
+        console.log(response);
+        assert(!response.ok);
+        assert.equal(response.status, 403);
+    } catch (error) {
+        throw error;
+    } finally {
+        await webdav.server.stopAsync();
+    }
+    // await webdav.server.stopAsync();
+});
+test("propfind-ok-depth-0", async () => {
+    const path = fileURLToPath(new URL("../index/", import.meta.url));
+    const port = Math.floor(Math.random() * 65536);
+    const host = "127.0.0.1";
+    const username = "root";
+    const password = "root";
+    const webdav = await main({ path, port, host, username, password });
+    try {
+        const response = await fetch(`http://127.0.0.1:${port}`, {
+            method: "PROPFIND",
+            headers: {
+                depth: "0",
                 Authorization: "Basic " + btoa(username + ":" + password),
             },
         });
         console.log(response);
         assert(response.ok);
-        assert.equal(response.status, 200);
-        const text = await response.text();
-        assert.equal(text, "hello world");
+        assert.equal(response.status, 207);
+    } catch (error) {
+        throw error;
+    } finally {
+        await webdav.server.stopAsync();
+    }
+    // await webdav.server.stopAsync();
+});
+test("propfind-ok-depth-1", async () => {
+    const path = fileURLToPath(new URL("../index/", import.meta.url));
+    const port = Math.floor(Math.random() * 65536);
+    const host = "127.0.0.1";
+    const username = "root";
+    const password = "root";
+    const webdav = await main({ path, port, host, username, password });
+    try {
+        const response = await fetch(`http://127.0.0.1:${port}`, {
+            method: "PROPFIND",
+            headers: {
+                depth: "0",
+                Authorization: "Basic " + btoa(username + ":" + password),
+            },
+        });
+        console.log(response);
+        assert(response.ok);
+        assert.equal(response.status, 207);
         // await webdav.server.stopAsync();
     } catch (error) {
         throw error;
@@ -174,7 +157,7 @@ test("get-ok-index-file", async () => {
         await webdav.server.stopAsync();
     }
 });
-test("get-ok-index-file-methodsWithoutAuthentication", async () => {
+test("propfind-ok-depth-1-methodsWithoutAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
     const port = Math.floor(Math.random() * 65536);
     const host = "127.0.0.1";
@@ -186,47 +169,22 @@ test("get-ok-index-file-methodsWithoutAuthentication", async () => {
         host,
         username,
         password,
-        methodsWithoutAuthentication: ["GET"],
+        methodsWithoutAuthentication: ["PROPFIND"],
     });
     try {
-        const response = await fetch(`http://127.0.0.1:${port}/index.html`, {
-            method: "GET",
+        const response = await fetch(`http://127.0.0.1:${port}`, {
+            method: "PROPFIND",
             headers: {
+                depth: "0",
                 // Authorization: "Basic " + btoa(username + ":" + password),
             },
         });
         console.log(response);
         assert(response.ok);
-        assert.equal(response.status, 200);
-        const text = await response.text();
-        assert.equal(text, "hello world");
-        assert(response.headers.get("content-type")?.startsWith("text/html"));
-        // await webdav.server.stopAsync();
-    } catch (error) {
-        throw error;
-    } finally {
-        await webdav.server.stopAsync();
-    }
-});
-test("get-not-found-index-file", async () => {
-    const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
-    const host = "127.0.0.1";
-    const username = "root";
-    const password = "root";
-    const webdav = await main({ path, port, host, username, password });
-    try {
-        const response = await fetch(`http://127.0.0.1:${port}/index5.html`, {
-            method: "GET",
-            headers: {
-                Authorization: "Basic " + btoa(username + ":" + password),
-            },
-        });
-        console.log(response);
-        assert(!response.ok);
-        assert.equal(response.status, 404);
-        // const text = await response.text();
-        // assert.equal(text, "hello world");
+        assert.equal(response.status, 207);
+        assert(
+            response.headers.get("content-type")?.startsWith("application/xml"),
+        );
         // await webdav.server.stopAsync();
     } catch (error) {
         throw error;
