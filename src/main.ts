@@ -2,8 +2,11 @@ import process from "process";
 import minimist from "minimist";
 import { WebdavCli } from "./webdav-cli.server.js";
 import { showhelp } from "./showhelp.js";
+import { WebdavCliConfig } from "./webdav-cli.interfaces.js";
 
-export async function main(argv: Partial<minimist.ParsedArgs>) {
+export async function main(
+    argv: Partial<WebdavCliConfig & minimist.ParsedArgs>,
+) {
     console.log("webdav-cli", "\n");
     if (argv.help || argv.h) {
         showhelp();

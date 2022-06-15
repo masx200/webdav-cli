@@ -31,5 +31,5 @@ declare class WebdavCli {
 }
 type HTTPRequestContext = webdav.HTTPRequestContext;
 declare function getRandomString(length: number): string;
-declare function main(argv: Partial<minimist.ParsedArgs>): Promise<WebdavCli>;
+declare function main(argv: Partial<WebdavCliConfig & minimist.ParsedArgs>): Promise<WebdavCli>;
 export { RIGHTS, WebdavCliRights, WebdavCliConfig, WebdavCliServer, WebdavCli, HTTPRequestContext, getRandomString, main };
