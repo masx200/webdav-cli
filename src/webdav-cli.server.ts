@@ -143,7 +143,7 @@ export class WebdavCli {
                 Array.isArray(this.config.methodsWithoutAuthentication) &&
                 this.config.methodsWithoutAuthentication.length
             ) {
-                server.beforeRequest((ctx, next) => {
+                server.beforeRequest((ctx, next): void => {
                     if (
                         ctx.request.method &&
                         this.config.methodsWithoutAuthentication?.includes(
@@ -158,6 +158,19 @@ export class WebdavCli {
             } else {
                 server.beforeRequest(auth_middle);
             }
+        } else {
+            server.afterRequest((ctx, next) => {
+                const readonly_methods = ["GET", "HEAD", "PROPFIND", "OPTIONS"];
+                if (
+                    ctx.request.method &&
+                    readonly_methods.includes(ctx.request.method)
+                ) {
+                    next();
+                } else {
+                    ctx.setCode(405);
+                    ctx.exit();
+                }
+            });
         }
         server.beforeRequest(propfindchecker());
         server.beforeRequest(koa_static_server(config.path));

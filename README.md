@@ -101,5 +101,5 @@ MIT
 添加了可选参数 `methodsWithoutAuthentication`,可以允许某些方法不需要身份验证,例如:
 
 ```
-'--methodsWithoutAuthentication=GET,HEAD,PROPFIND'
+'--methodsWithoutAuthentication=GET,HEAD,PROPFIND,OPTIONS'
 ```

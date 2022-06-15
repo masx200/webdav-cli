@@ -110,7 +110,10 @@ class A {
         if (i.beforeRequest((async (e, t) => {
             const {url: s, headers: n, method: o} = e.request;
             console.log(">> ", o, s, n), t();
-        })), !e.disableAuthentication) {
+        })), e.disableAuthentication) i.afterRequest(((e, t) => {
+            e.request.method && [ "GET", "HEAD", "PROPFIND", "OPTIONS" ].includes(e.request.method) ? t() : (e.setCode(405), 
+            e.exit());
+        })); else {
             const e = this.auth_middle;
             Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? i.beforeRequest(((t, s) => {
                 t.request.method && this.config.methodsWithoutAuthentication?.includes(t.request.method) ? s() : e(t, s);
@@ -163,7 +166,7 @@ const f = t(e.argv.slice(2));
 console.log("webdav-cli", "\n"), (f.help || f.h) && (console.log([ "usage: webdav-cli [options]", "", "options:", "  --path,-pa        Path to folder [process.cwd()]", "  --host,-ho         Host to use [0.0.0.0]", "  --port,-po       Port to use [1900]", "  --digest,-dg     Enable digest authentication [basic]", "  --username,-u   Username for basic/digest authentication [random]", "  --password,-ps   Password for basic/digest authentication [random]", "  --disableAuthentication,-da  The server file becomes read-only without Authentication.[false]", "  --ssl,-s        Enable https [false]", "  --methodsWithoutAuthentication          methods Without Authentication[undefined]", "  --sslKey     Path to ssl key file [self-signed]", "  --sslCert    Path to ssl cert file [self-signed]", "  --help,-h       Print this list and exit", "  --rights,-r     Comma separated values without spaces [all]", "\n    'all', 'canCreate', 'canDelete', 'canMove', 'canRename', \n    'canAppend', 'canWrite', 'canRead', 'canSource', \n    'canGetMimeType', 'canGetSize', 'canListLocks', \n    'canSetLock', 'canRemoveLock', 'canGetAvailableLocks', \n    'canGetLock', 'canAddChild', 'canRemoveChild', \n    'canGetChildren', 'canSetProperty', 'canGetProperty', \n    'canGetProperties', 'canRemoveProperty', 'canGetCreationDate', \n    'canGetLastModifiedDate', 'canGetWebName', 'canGetType'", "", "env:", "  WEBDAV_CLI_PATH, WEBDAV_CLI_HOST, WEBDAV_CLI_PORT,", "  WEBDAV_CLI_USERNAME, WEBDAV_CLI_PASSWORD, WEBDAV_CLI_DIGEST,", "  WEBDAV_CLI_SSL, WEBDAV_CLI_SSL_KEY, WEBDAV_CLI_SSL_CERT,", "  WEBDAV_CLI_AUTO_INDEX, WEBDAV_CLI_RIGHTS", "  WEBDAV_CLI_DISABLE_AUTHENTICATION", "" ].join("\n")), 
 e.exit());
 
-const _ = f.rights || f.r, S = _ && "string" == typeof _ ? _.split(",") : void 0, C = e.env.WEBDAV_CLI_RIGHTS ? e.env.WEBDAV_CLI_RIGHTS.split(",") : void 0, L = {
+const _ = f.rights || f.r, S = _ && "string" == typeof _ ? _.split(",") : void 0, C = e.env.WEBDAV_CLI_RIGHTS ? e.env.WEBDAV_CLI_RIGHTS.split(",") : void 0, E = {
     path: f.path || e.env.WEBDAV_CLI_PATH || f.pa,
     host: f.host || e.env.WEBDAV_CLI_HOST || f.ho,
     port: Number(f.port || f.po) || parseInt(String(e.env.WEBDAV_CLI_PORT)),
@@ -179,7 +182,7 @@ const _ = f.rights || f.r, S = _ && "string" == typeof _ ? _.split(",") : void 0
 };
 
 (async () => {
-    const e = new A(L);
+    const e = new A(E);
     await e.start();
 })(), e.on("unhandledRejection", (e => {
     console.error(e);

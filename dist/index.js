@@ -106,7 +106,10 @@ class p {
         if (i.beforeRequest((async (e, t) => {
             const {url: s, headers: n, method: r} = e.request;
             console.log(">> ", r, s, n), t();
-        })), !e.disableAuthentication) {
+        })), e.disableAuthentication) i.afterRequest(((e, t) => {
+            e.request.method && [ "GET", "HEAD", "PROPFIND", "OPTIONS" ].includes(e.request.method) ? t() : (e.setCode(405), 
+            e.exit());
+        })); else {
             const e = this.auth_middle;
             Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? i.beforeRequest(((t, s) => {
                 t.request.method && this.config.methodsWithoutAuthentication?.includes(t.request.method) ? s() : e(t, s);
