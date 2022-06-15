@@ -1,7 +1,7 @@
 import { fileURLToPath } from "url";
 import { assert } from "vitest";
 import { main } from "../src";
-import { test } from "vitest";
+import { test } from "vitest";import { fetch } from "undici";
 test("post-ok-index2-file", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
     const port = Math.floor(Math.random() * 65536);
