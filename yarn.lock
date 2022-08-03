@@ -682,7 +682,7 @@ esbuild-windows-arm64@0.14.53:
   version "0.14.53"
   resolved "https://registry.yarnpkg.com/esbuild-windows-arm64/-/esbuild-windows-arm64-0.14.53.tgz#f71d403806bdf9f4a1f9d097db9aec949bd675c8"
 
-esbuild@^0.14.27:
+esbuild@^0.14.47:
   version "0.14.53"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.14.53.tgz#20b1007f686e8584f2a01a1bec5a37aac9498ce4"
   optionalDependencies:
@@ -1025,7 +1025,7 @@ koa@^2.13.1, koa@^2.13.4:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-local-pkg@^0.4.1:
+local-pkg@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/local-pkg/-/local-pkg-0.4.2.tgz#13107310b77e74a0e513147a131a2ba288176c2f"
 
@@ -1183,7 +1183,7 @@ picomatch@^2.2.2:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
 
-postcss@^8.4.13:
+postcss@^8.4.14:
   version "8.4.14"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.14.tgz#ee9274d5622b4858c1007a74d76e42e56fd21caf"
   dependencies:
@@ -1212,7 +1212,7 @@ resolve-path@^1.4.0:
     http-errors "~1.6.2"
     path-is-absolute "1.0.1"
 
-resolve@^1.17.0, resolve@^1.19.0, resolve@^1.22.0:
+resolve@^1.17.0, resolve@^1.19.0, resolve@^1.22.1:
   version "1.22.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.1.tgz#27cb2ebb53f91abb49470a928bba7558066ac177"
   dependencies:
@@ -1254,7 +1254,7 @@ rollup-plugin-ts@^3.0.2:
     ts-clone-node "^1.0.0"
     tslib "^2.4.0"
 
-rollup@^2.59.0, rollup@^2.75.6:
+rollup@^2.75.6:
   version "2.77.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.77.2.tgz#6b6075c55f9cc2040a5912e6e062151e42e2c4e3"
   optionalDependencies:
@@ -1364,13 +1364,13 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
-tinypool@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-0.1.3.tgz#b5570b364a1775fd403de5e7660b325308fee26b"
+tinypool@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-0.2.4.tgz#4d2598c4689d1a2ce267ddf3360a9c6b3925a20c"
 
-tinyspy@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/tinyspy/-/tinyspy-0.3.3.tgz#8b57f8aec7fe1bf583a3a49cb9ab30c742f69237"
+tinyspy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tinyspy/-/tinyspy-1.0.0.tgz#0cb34587287b0432b33fe36a9bd945fe22b1eb89"
 
 toidentifier@1.0.1:
   version "1.0.1"
@@ -1440,30 +1440,30 @@ vary@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
-vite@^2.9.12:
-  version "2.9.14"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.14.tgz#c438324c6594afd1050df3777da981dee988bb1b"
+"vite@^2.9.12 || ^3.0.0-0":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.4.tgz#c61688d6b97573e96cf5ac25f2d68597b5ce68e8"
   dependencies:
-    esbuild "^0.14.27"
-    postcss "^8.4.13"
-    resolve "^1.22.0"
-    rollup "^2.59.0"
+    esbuild "^0.14.47"
+    postcss "^8.4.14"
+    resolve "^1.22.1"
+    rollup "^2.75.6"
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest@^0.15.0:
-  version "0.15.2"
-  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.15.2.tgz#3931c390685ff03331298c7719d27d691f79e782"
+vitest@^0.20.3:
+  version "0.20.3"
+  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.20.3.tgz#24e0744fd1671a9a5d9cf8876281eae65e8d3be6"
   dependencies:
     "@types/chai" "^4.3.1"
     "@types/chai-subset" "^1.3.3"
     "@types/node" "*"
     chai "^4.3.6"
     debug "^4.3.4"
-    local-pkg "^0.4.1"
-    tinypool "^0.1.3"
-    tinyspy "^0.3.3"
-    vite "^2.9.12"
+    local-pkg "^0.4.2"
+    tinypool "^0.2.4"
+    tinyspy "^1.0.0"
+    vite "^2.9.12 || ^3.0.0-0"
 
 webdav-server@^2.6.2:
   version "2.6.2"
