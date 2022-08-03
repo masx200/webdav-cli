@@ -5,7 +5,7 @@ import { test } from "vitest";
 import { fetch } from "undici";
 test("post-ok-index2-file", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -41,7 +41,7 @@ test("post-ok-index2-file", async () => {
 });
 test("put-ok-index2-file", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -80,7 +80,7 @@ test("put-ok-index2-file", async () => {
 
 test("delete-ok-index2-file", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";

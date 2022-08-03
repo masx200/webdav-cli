@@ -6,7 +6,7 @@ import { fetch } from "undici";
 
 test("DELETE-fail-index-file-disableAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -36,7 +36,7 @@ test("DELETE-fail-index-file-disableAuthentication", async () => {
 });
 test("post-fail-index-file-disableAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -66,7 +66,7 @@ test("post-fail-index-file-disableAuthentication", async () => {
 });
 test("get-ok-index-file-disableAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -101,7 +101,7 @@ test("get-ok-index-file-disableAuthentication", async () => {
 
 test("get-Unauthorized", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -123,7 +123,7 @@ test("get-Unauthorized", async () => {
 
 test("get-ok-dir-index", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -150,7 +150,7 @@ test("get-ok-dir-index", async () => {
 });
 test("get-ok-index-file", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -176,7 +176,7 @@ test("get-ok-index-file", async () => {
 });
 test("get-ok-index-file-methodsWithoutAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -210,7 +210,7 @@ test("get-ok-index-file-methodsWithoutAuthentication", async () => {
 });
 test("get-not-found-index-file", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";

@@ -6,7 +6,7 @@ import { fetch } from "undici";
 
 test("propfind-ok-depth-0-disableAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -38,7 +38,7 @@ test("propfind-ok-depth-0-disableAuthentication", async () => {
 });
 test("propfind-Unauthorized", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -60,7 +60,7 @@ test("propfind-Unauthorized", async () => {
 });
 test("propfind-Forbidden-no-depth", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -84,7 +84,7 @@ test("propfind-Forbidden-no-depth", async () => {
 });
 test("propfind-Forbidden-depth-2", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -109,7 +109,7 @@ test("propfind-Forbidden-depth-2", async () => {
 });
 test("propfind-ok-depth-0", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -134,7 +134,7 @@ test("propfind-ok-depth-0", async () => {
 });
 test("propfind-ok-depth-1", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
@@ -159,7 +159,7 @@ test("propfind-ok-depth-1", async () => {
 });
 test("propfind-ok-depth-1-methodsWithoutAuthentication", async () => {
     const path = fileURLToPath(new URL("../index/", import.meta.url));
-    const port = Math.floor(Math.random() * 65536);
+    const port = 20000 + Math.floor(Math.random() * 45536);
     const host = "127.0.0.1";
     const username = "root";
     const password = "root";
