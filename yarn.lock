@@ -183,7 +183,7 @@ __metadata:
     koa-static: ^5.0.0
     koa2-serve-index: ^2.0.1
     minimist: ^1.2.5
-    prettier: ^2.7.0
+    prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rollup: ^2.77.2
     rollup-external-modules: ^2.0.0
@@ -2469,7 +2469,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.7.0":
+"prettier@npm:^2.7.1":
   version: 2.7.1
   resolution: "prettier@npm:2.7.1"
   bin:
