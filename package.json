@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^23.0.0",
-        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@types/etag": "^1.8.0",
         "@types/fresh": "^0.5.0",
