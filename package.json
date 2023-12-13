@@ -59,7 +59,7 @@
         "terser": "^5.14.2",
         "tsconfig-paths": "^4.0.0",
         "typescript": "^4.7.4",
-        "undici": "^5.8.0",
+        "undici": "^6.0.1",
         "vitest": "^0.29.2"
     },
     "dependencies": {
