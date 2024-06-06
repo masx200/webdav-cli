@@ -32,7 +32,7 @@
         "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md *.mjs"
     },
     "devDependencies": {
-        "@rollup/plugin-commonjs": "^25.0.7",
+        "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@types/etag": "^1.8.0",
