@@ -1,38 +1,38 @@
 #!/usr/bin/env node
 import e from "process";
 
-import t from "minimist";
+import t from "fs";
 
-import s from "fs";
+import { dirname as s, join as n } from "path";
 
-import { dirname as n, join as o } from "path";
+import { fileURLToPath as o } from "url";
 
-import { fileURLToPath as i } from "url";
+import { v2 as i } from "webdav-server";
 
-import { v2 as r } from "webdav-server";
+import r from "http-auth";
 
-import a from "http-auth";
+import a from "http-auth/src/auth/utils.js";
 
-import c from "http-auth/src/auth/utils.js";
+import c from "koa";
 
-import h from "koa";
+import h from "koa-logger";
 
-import l from "koa-logger";
+import { loadcoremiddles as l } from "@masx200/serve-cli";
 
-import { loadcoremiddles as u } from "@masx200/serve-cli";
+import u from "minimist";
 
 function d(e) {
     const t = "Default realm", s = "HTTPBasicAuthentication" === e.authentication ? function(e, t, s) {
-        return a.basic({
+        return r.basic({
             realm: e
         }, ((e, n, o) => {
             o(e === t && n === s);
         }));
     }(t, e.user, e.pass) : function(e, t, s) {
-        return a.digest({
+        return r.digest({
             realm: e
         }, ((n, o) => {
-            n === t ? o(c.md5(`${n}:${e}:${s}`)) : o();
+            n === t ? o(a.md5(`${n}:${e}:${s}`)) : o();
         }));
     }(t, e.user, e.pass);
     return (e, t) => {
@@ -48,7 +48,7 @@ function m(e) {
     return [ ...Array(Math.ceil(e / 8)) ].map((() => Math.random().toString(36).slice(-8))).join("").slice(-e);
 }
 
-const g = n(i(import.meta.url));
+const g = s(o(import.meta.url));
 
 class A {
     config;
@@ -66,9 +66,9 @@ class A {
         this.#e = s, this.server = this.#n();
     }
     #t(e) {
-        const t = o(g, "/../certs/self-signed.key.pem"), n = o(g, "/../certs/self-signed.cert.pem"), i = e.path || process.cwd(), r = e.host || "0.0.0.0", a = e.port || 1900, c = Boolean(e.digest);
+        const s = n(g, "/../certs/self-signed.key.pem"), o = n(g, "/../certs/self-signed.cert.pem"), i = e.path || process.cwd(), r = e.host || "0.0.0.0", a = e.port || 1900, c = Boolean(e.digest);
         let h = (e.username || m(16)).toString(), l = (e.password || m(16)).toString();
-        const u = Boolean(e.ssl), d = u ? s.readFileSync(e.sslKey || t).toString() : "", A = u ? s.readFileSync(e.sslCert || n).toString() : "", f = Boolean(e.disableAuthentication);
+        const u = Boolean(e.ssl), d = u ? t.readFileSync(e.sslKey || s).toString() : "", A = u ? t.readFileSync(e.sslCert || o).toString() : "", f = Boolean(e.disableAuthentication);
         f && (e.rights = e.rights || [ "canRead" ], h = "", l = "");
         const _ = (e.rights || [ "all" ]).filter((e => p.includes(e))), S = `${u ? "https" : "http"}://${r}:${a}`;
         return {
@@ -88,7 +88,7 @@ class A {
         };
     }
     #n() {
-        const e = this.config, t = new r.SimpleUserManager, s = t.addUser(e.username, e.password, !1), n = new r.SimplePathPrivilegeManager;
+        const e = this.config, t = new i.SimpleUserManager, s = t.addUser(e.username, e.password, !1), n = new i.SimplePathPrivilegeManager;
         n.setRights(s, "/", e.rights);
         const o = {
             requireAuthentification: !1,
@@ -107,35 +107,35 @@ class A {
             cert: e.sslCert,
             key: e.sslKey
         });
-        const i = new r.WebDAVServer(o);
-        if (i.beforeRequest((async (e, t) => {
+        const r = new i.WebDAVServer(o);
+        if (r.beforeRequest((async (e, t) => {
             const {url: s, headers: n, method: o} = e.request;
             console.log(">> ", o, s, n), t();
-        })), e.disableAuthentication) i.beforeRequest(((e, t) => {
+        })), e.disableAuthentication) r.beforeRequest(((e, t) => {
             e.request.method && [ "GET", "HEAD", "PROPFIND", "OPTIONS" ].includes(e.request.method) ? t() : (e.setCode(405), 
             e.exit());
         })); else {
             const e = this.#e;
-            Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? i.beforeRequest(((t, s) => {
+            Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? r.beforeRequest(((t, s) => {
                 t.request.method && this.config.methodsWithoutAuthentication?.includes(t.request.method) ? s() : e(t, s);
-            })) : i.beforeRequest(e);
+            })) : r.beforeRequest(e);
         }
-        return i.beforeRequest(((e, t) => {
+        return r.beforeRequest(((e, t) => {
             const {headers: s, method: n} = e.request, {depth: o} = s;
             "PROPFIND" === n && "0" !== o && "1" !== o ? (e.setCode(403), e.exit()) : t();
-        })), i.beforeRequest(function(e) {
-            const t = new h;
-            t.use(l()), u(t, e, !1);
+        })), r.beforeRequest(function(e) {
+            const t = new c;
+            t.use(h()), l(t, e, !1);
             const s = t.callback();
             return function(e, t) {
                 const {request: n, response: o} = e, [i, r] = [ n, o ];
                 if (e.request.method && ![ "GET", "HEAD" ].includes(e.request.method)) return t();
                 s(i, r);
             };
-        }(e.path)), i.afterRequest(((e, t) => {
+        }(e.path)), r.afterRequest(((e, t) => {
             const s = `>> ${e.request.method} ${e.requested.uri} > ${e.response.statusCode} `;
             console.log(s), t();
-        })), i;
+        })), r;
     }
     #s(e) {
         return e.digest ? "HTTPDigestAuthentication" : "HTTPBasicAuthentication";
@@ -143,7 +143,7 @@ class A {
     async start() {
         const e = this.config, {server: t} = this;
         console.log(Object.fromEntries(Object.entries(e).filter((([e]) => ![ "sslKey", "sslCert" ].includes(e))))), 
-        await t.setFileSystemAsync("/", new r.PhysicalFileSystem(e.path));
+        await t.setFileSystemAsync("/", new i.PhysicalFileSystem(e.path));
         const s = [ `Server running at ${e.url}`, "Hit CTRL-C to stop the server", "Run with --help to print help" ];
         let n;
         console.log(s.join("\n")), Object.defineProperty(t, "server", {
@@ -185,5 +185,7 @@ class A {
         const e = new A(i);
         return await e.start(), e;
     })();
-})(t(e.argv.slice(2))).catch(console.error);
+})(u(e.argv.slice(2), {
+    string: [ "username", "password" ]
+})).catch(console.error);
 //# sourceMappingURL=webdav-cli.cli.js.map
