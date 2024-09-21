@@ -1,5 +1,5 @@
-import { HTTPRequestContext } from "./index";
-import { createhttpauth } from "./create-http-auth.js";
+import { HTTPRequestContext } from "./index.ts";
+import { createhttpauth } from "./create-http-auth.ts";
 
 export function createhttpauthmiddle(
     username: string,

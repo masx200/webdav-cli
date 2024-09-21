@@ -1,4 +1,4 @@
-import { main } from "./main";
+import { main } from "./main.ts";
 import minimist from "minimist";
 // #!/usr/bin/env node
 import process from "process";

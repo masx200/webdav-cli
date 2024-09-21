@@ -3,8 +3,8 @@ import { defineConfig } from "rollup";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import rollupExternalModules from "rollup-external-modules";
+import swc from "rollup-plugin-swc";
 import { terser } from "rollup-plugin-terser";
-import ts from "rollup-plugin-ts";
 
 const banner = `#!/usr/bin/env node`;
 const terserplugin = terser({
@@ -32,7 +32,7 @@ export default defineConfig([
                 format: "esm",
             },
         ],
-        plugins: [ts(), resolve(), commonjs(), terserplugin, json()],
+        plugins: [swcplugin(), resolve(), commonjs(), terserplugin, json()],
     },
     {
         external: rollupExternalModules,
@@ -46,6 +46,16 @@ export default defineConfig([
                 format: "esm",
             },
         ],
-        plugins: [ts(), resolve(), commonjs(), terserplugin, json()],
+        plugins: [swcplugin(), resolve(), commonjs(), terserplugin, json()],
     },
 ]);
+function swcplugin() {
+    return swc.default({
+        jsc: {
+            parser: {
+                syntax: "typescript",
+            },
+            target: "esnext",
+        },
+    });
+}

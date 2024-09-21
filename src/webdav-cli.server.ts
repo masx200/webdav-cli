@@ -1,17 +1,18 @@
+import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces.ts";
+import { dirname, join } from "path";
+
+import { RIGHTS } from "./webdav-cli.constants.ts";
+import { afterlogger } from "./afterlogger.ts";
+import { beforelogger } from "./beforelogger.ts";
+import { createhttpauthmiddle } from "./createhttpauthmiddle.ts";
+import { fileURLToPath } from "url";
 import fs from "fs";
+import { getRandomString } from "./webdav-cli.utils.ts";
 import http from "http";
 import https from "https";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+import { koa_static_server } from "./koa-static-server.ts";
+import { propfindchecker } from "./propfindchecker.ts";
 import { v2 as webdav } from "webdav-server";
-import { afterlogger } from "./afterlogger.js";
-import { beforelogger } from "./beforelogger.js";
-import { createhttpauthmiddle } from "./createhttpauthmiddle.js";
-import { koa_static_server } from "./koa-static-server.js";
-import { propfindchecker } from "./propfindchecker.js";
-import { RIGHTS } from "./webdav-cli.constants.js";
-import { WebdavCliConfig, WebdavCliRights } from "./webdav-cli.interfaces.js";
-import { getRandomString } from "./webdav-cli.utils.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export class WebdavCli {

@@ -1,5 +1,5 @@
-export * from "./webdav-cli.constants.js";
-export * from "./webdav-cli.interfaces.js";
-export * from "./webdav-cli.server.js";
-export * from "./webdav-cli.utils.js";
-export { main } from "./main";
+export * from "./webdav-cli.constants.ts";
+export * from "./webdav-cli.interfaces.ts";
+export * from "./webdav-cli.server.ts";
+export * from "./webdav-cli.utils.ts";
+export { main } from "./main.ts";

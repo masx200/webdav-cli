@@ -12,7 +12,8 @@
         "sourceMap": false,
         "outDir": "./dist",
         "baseUrl": "./",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true
     },
     "include": ["src/**/*", "test/**/*"],
     "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]

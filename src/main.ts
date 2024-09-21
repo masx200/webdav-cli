@@ -1,8 +1,8 @@
-import process from "process";
+import { WebdavCli } from "./webdav-cli.server.ts";
+import { WebdavCliConfig } from "./webdav-cli.interfaces.ts";
 import minimist from "minimist";
-import { WebdavCli } from "./webdav-cli.server.js";
-import { showhelp } from "./showhelp.js";
-import { WebdavCliConfig } from "./webdav-cli.interfaces.js";
+import process from "process";
+import { showhelp } from "./showhelp.ts";
 
 export async function main(
     argv: Partial<WebdavCliConfig & minimist.ParsedArgs>,

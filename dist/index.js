@@ -1,42 +1,42 @@
 #!/usr/bin/env node
-import e from "fs";
+import { dirname as e, join as t } from "path";
 
-import { dirname as t, join as s } from "path";
+import s from "http-auth";
 
-import { fileURLToPath as n } from "url";
+import n from "http-auth/src/auth/utils.js";
 
-import { v2 as o } from "webdav-server";
+import { fileURLToPath as o } from "url";
 
-import i from "http-auth";
+import i from "fs";
 
-import r from "http-auth/src/auth/utils.js";
+import r from "koa";
 
-import a from "koa";
+import a from "koa-logger";
 
-import c from "koa-logger";
+import { loadcoremiddles as c } from "@masx200/serve-cli";
 
-import { loadcoremiddles as h } from "@masx200/serve-cli";
+import { v2 as h } from "webdav-server";
 
 import l from "process";
 
 const u = [ "all", "canCreate", "canDelete", "canMove", "canRename", "canAppend", "canWrite", "canRead", "canSource", "canGetMimeType", "canGetSize", "canListLocks", "canSetLock", "canRemoveLock", "canGetAvailableLocks", "canGetLock", "canAddChild", "canRemoveChild", "canGetChildren", "canSetProperty", "canGetProperty", "canGetProperties", "canRemoveProperty", "canGetCreationDate", "canGetLastModifiedDate", "canGetWebName", "canGetType" ];
 
 function d(e) {
-    const t = "Default realm", s = "HTTPBasicAuthentication" === e.authentication ? function(e, t, s) {
-        return i.basic({
+    const t = "Default realm", o = "HTTPBasicAuthentication" === e.authentication ? function(e, t, n) {
+        return s.basic({
             realm: e
-        }, ((e, n, o) => {
-            o(e === t && n === s);
+        }, ((e, s, o) => {
+            o(e === t && s === n);
         }));
-    }(t, e.user, e.pass) : function(e, t, s) {
-        return i.digest({
+    }(t, e.user, e.pass) : function(e, t, o) {
+        return s.digest({
             realm: e
-        }, ((n, o) => {
-            n === t ? o(r.md5(`${n}:${e}:${s}`)) : o();
+        }, ((s, i) => {
+            s === t ? i(n.md5(`${s}:${e}:${o}`)) : i();
         }));
     }(t, e.user, e.pass);
     return (e, t) => {
-        s.check(((e, s) => {
+        o.check(((e, s) => {
             t();
         }))(e.request, e.response);
     };
@@ -46,7 +46,7 @@ function p(e) {
     return [ ...Array(Math.ceil(e / 8)) ].map((() => Math.random().toString(36).slice(-8))).join("").slice(-e);
 }
 
-const m = t(n(import.meta.url));
+const m = e(o(import.meta.url));
 
 class A {
     config;
@@ -63,16 +63,16 @@ class A {
         }(this.config.username, this.config.password, t);
         this.#e = s, this.server = this.#n();
     }
-    #t(t) {
-        const n = s(m, "/../certs/self-signed.key.pem"), o = s(m, "/../certs/self-signed.cert.pem"), i = t.path || process.cwd(), r = t.host || "0.0.0.0", a = t.port || 1900, c = Boolean(t.digest);
-        let h = (t.username || p(16)).toString(), l = (t.password || p(16)).toString();
-        const d = Boolean(t.ssl), A = d ? e.readFileSync(t.sslKey || n).toString() : "", g = d ? e.readFileSync(t.sslCert || o).toString() : "", f = Boolean(t.disableAuthentication);
-        f && (t.rights = t.rights || [ "canRead" ], h = "", l = "");
-        const _ = (t.rights || [ "all" ]).filter((e => u.includes(e))), S = `${d ? "https" : "http"}://${r}:${a}`;
+    #t(e) {
+        const s = t(m, "/../certs/self-signed.key.pem"), n = t(m, "/../certs/self-signed.cert.pem"), o = e.path || process.cwd(), r = e.host || "0.0.0.0", a = e.port || 1900, c = Boolean(e.digest);
+        let h = (e.username || p(16)).toString(), l = (e.password || p(16)).toString();
+        const d = Boolean(e.ssl), A = d ? i.readFileSync(e.sslKey || s).toString() : "", g = d ? i.readFileSync(e.sslCert || n).toString() : "", f = Boolean(e.disableAuthentication);
+        f && (e.rights = e.rights || [ "canRead" ], h = "", l = "");
+        const _ = (e.rights || [ "all" ]).filter((e => u.includes(e))), S = `${d ? "https" : "http"}://${r}:${a}`;
         return {
-            ...t,
+            ...e,
             host: r,
-            path: i,
+            path: o,
             port: a,
             username: h,
             digest: c,
@@ -86,9 +86,9 @@ class A {
         };
     }
     #n() {
-        const e = this.config, t = new o.SimpleUserManager, s = t.addUser(e.username, e.password, !1), n = new o.SimplePathPrivilegeManager;
+        const e = this.config, t = new h.SimpleUserManager, s = t.addUser(e.username, e.password, !1), n = new h.SimplePathPrivilegeManager;
         n.setRights(s, "/", e.rights);
-        const i = {
+        const o = {
             requireAuthentification: !1,
             httpAuthentication: {
                 askForAuthentication: () => ({}),
@@ -101,39 +101,39 @@ class A {
             port: e.port,
             hostname: e.host
         };
-        e.ssl && Reflect.set(i, "https", {
+        e.ssl && Reflect.set(o, "https", {
             cert: e.sslCert,
             key: e.sslKey
         });
-        const r = new o.WebDAVServer(i);
-        if (r.beforeRequest((async (e, t) => {
+        const i = new h.WebDAVServer(o);
+        if (i.beforeRequest((async (e, t) => {
             const {url: s, headers: n, method: o} = e.request;
             console.log(">> ", o, s, n), t();
-        })), e.disableAuthentication) r.beforeRequest(((e, t) => {
+        })), e.disableAuthentication) i.beforeRequest(((e, t) => {
             e.request.method && [ "GET", "HEAD", "PROPFIND", "OPTIONS" ].includes(e.request.method) ? t() : (e.setCode(405), 
             e.exit());
         })); else {
             const e = this.#e;
-            Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? r.beforeRequest(((t, s) => {
+            Array.isArray(this.config.methodsWithoutAuthentication) && this.config.methodsWithoutAuthentication.length ? i.beforeRequest(((t, s) => {
                 t.request.method && this.config.methodsWithoutAuthentication?.includes(t.request.method) ? s() : e(t, s);
-            })) : r.beforeRequest(e);
+            })) : i.beforeRequest(e);
         }
-        return r.beforeRequest(((e, t) => {
+        return i.beforeRequest(((e, t) => {
             const {headers: s, method: n} = e.request, {depth: o} = s;
             "PROPFIND" === n && "0" !== o && "1" !== o ? (e.setCode(403), e.exit()) : t();
-        })), r.beforeRequest(function(e) {
-            const t = new a;
-            t.use(c()), h(t, e, !1);
+        })), i.beforeRequest(function(e) {
+            const t = new r;
+            t.use(a()), c(t, e, !1);
             const s = t.callback();
             return function(e, t) {
                 const {request: n, response: o} = e, [i, r] = [ n, o ];
                 if (e.request.method && ![ "GET", "HEAD" ].includes(e.request.method)) return t();
                 s(i, r);
             };
-        }(e.path)), r.afterRequest(((e, t) => {
+        }(e.path)), i.afterRequest(((e, t) => {
             const s = `>> ${e.request.method} ${e.requested.uri} > ${e.response.statusCode} `;
             console.log(s), t();
-        })), r;
+        })), i;
     }
     #s(e) {
         return e.digest ? "HTTPDigestAuthentication" : "HTTPBasicAuthentication";
@@ -141,7 +141,7 @@ class A {
     async start() {
         const e = this.config, {server: t} = this;
         console.log(Object.fromEntries(Object.entries(e).filter((([e]) => ![ "sslKey", "sslCert" ].includes(e))))), 
-        await t.setFileSystemAsync("/", new o.PhysicalFileSystem(e.path));
+        await t.setFileSystemAsync("/", new h.PhysicalFileSystem(e.path));
         const s = [ `Server running at ${e.url}`, "Hit CTRL-C to stop the server", "Run with --help to print help" ];
         let n;
         console.log(s.join("\n")), Object.defineProperty(t, "server", {
