@@ -43,8 +43,8 @@ export async function main(
             "string" === typeof argv.methodsWithoutAuthentication
                 ? String(argv.methodsWithoutAuthentication).split(",")
                 : Array.isArray(argv.methodsWithoutAuthentication)
-                ? argv.methodsWithoutAuthentication
-                : undefined,
+                  ? argv.methodsWithoutAuthentication
+                  : undefined,
     };
     process.on("unhandledRejection", (e) => {
         console.error(e);

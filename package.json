@@ -1,96 +1,96 @@
 {
-  "overrides": {
-    "@koa/cors": "^5.0.0"
-  },
-  "resolutions": {
-    "debug": "4.3.2",
-    "terser": "^5.14.2",
-    "object-path": "0.11.8"
-  },
-  "version": "3.1.2",
-  "type": "module",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.com"
-  },
-  "name": "@masx200/webdav-cli",
-  "description": "A simple zero-configuration command-line webdav server",
-  "license": "MIT",
-  "keywords": [
-    "cli",
-    "command",
-    "webdav",
-    "server"
-  ],
-  "bin": "dist/webdav-cli.cli.js",
-  "preferGlobal": true,
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "vitest run",
-    "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0 --path=index",
-    "build": " rollup -c rollup.config.mjs",
-    "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md *.mjs"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "@types/etag": "^1.8.0",
-    "@types/fresh": "^0.5.0",
-    "@types/http-auth": "^4.1.0",
-    "@types/koa": "^2.13.3",
-    "@types/koa-compress": "^4.0.1",
-    "@types/koa-conditional-get": "^2.0.0",
-    "@types/koa-etag": "^3.0.0",
-    "@types/koa-logger": "^3.1.2",
-    "@types/koa-range": "^0.3.2",
-    "@types/koa-static": "^4.0.1",
-    "@types/koa__cors": "^5.0.0",
-    "@types/minimist": "^1.2.1",
-    "@types/node": "^20.10.4",
-    "hosted-git-info": "^7.0.1",
-    "prettier": "^3.1.1",
-    "reflect-metadata": "^0.2.0",
-    "rollup": "^3.29.5",
-    "rollup-external-modules": "^2.0.0",
-    "rollup-plugin-node-externals": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-ts": "^3.4.5",
-    "terser": "^5.14.2",
-    "tsconfig-paths": "^4.0.0",
-    "typescript": "^5.6.2",
-    "undici": "^6.0.1",
-    "vitest": "^1.0.4"
-  },
-  "dependencies": {
-    "@koa/cors": "^5.0.0",
-    "@masx200/koa-range": "^1.0.5",
-    "@masx200/koa-stream-etag": "^5.0.8",
-    "@masx200/serve-cli": "^1.3.1",
-    "etag": "^1.8.1",
-    "fresh": "^0.5.2",
-    "graceful-fs": "^4.2.6",
-    "http-auth": "^4.1.7",
-    "koa": "^2.13.1",
-    "koa-compress": "^5.0.1",
-    "koa-conditional-get": "^3.0.0",
-    "koa-etag": "^4.0.0",
-    "koa-logger": "^3.2.1",
-    "koa-static": "^5.0.0",
-    "koa2-serve-index": "^2.0.1",
-    "minimist": "^1.2.8",
-    "webdav-server": "^2.6.2"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "repository": "git+https://github.com/masx200/webdav-cli.git",
-  "author": "masx200 <masx200@qq.com>",
-  "bugs": {
-    "url": "https://github.com/masx200/webdav-cli/issues"
-  },
-  "homepage": "https://github.com/masx200/webdav-cli#readme",
-  "packageManager": "yarn@3.2.0"
+    "overrides": {
+        "@koa/cors": "^5.0.0"
+    },
+    "resolutions": {
+        "debug": "4.3.2",
+        "terser": "^5.14.2",
+        "object-path": "0.11.8"
+    },
+    "version": "3.1.2",
+    "type": "module",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.com"
+    },
+    "name": "@masx200/webdav-cli",
+    "description": "A simple zero-configuration command-line webdav server",
+    "license": "MIT",
+    "keywords": [
+        "cli",
+        "command",
+        "webdav",
+        "server"
+    ],
+    "bin": "dist/webdav-cli.cli.js",
+    "preferGlobal": true,
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "test": "vitest run",
+        "start": "node ./dist/webdav-cli.cli.js --username root --password root --host 0.0.0.0 --path=index",
+        "build": " rollup -c rollup.config.mjs",
+        "format": "npx prettier --write \"**/*.ts\" **/*.js *.json *.md *.mjs"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^25.0.7",
+        "@rollup/plugin-json": "^6.0.0",
+        "@rollup/plugin-node-resolve": "^15.0.1",
+        "@types/etag": "^1.8.0",
+        "@types/fresh": "^0.5.0",
+        "@types/http-auth": "^4.1.0",
+        "@types/koa": "^2.13.3",
+        "@types/koa-compress": "^4.0.1",
+        "@types/koa-conditional-get": "^2.0.0",
+        "@types/koa-etag": "^3.0.0",
+        "@types/koa-logger": "^3.1.2",
+        "@types/koa-range": "^0.3.2",
+        "@types/koa-static": "^4.0.1",
+        "@types/koa__cors": "^5.0.0",
+        "@types/minimist": "^1.2.1",
+        "@types/node": "^20.10.4",
+        "hosted-git-info": "^7.0.1",
+        "prettier": "^3.1.1",
+        "reflect-metadata": "^0.2.0",
+        "rollup": "^3.29.5",
+        "rollup-external-modules": "^2.0.0",
+        "rollup-plugin-node-externals": "^7.0.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-ts": "^3.4.5",
+        "terser": "^5.14.2",
+        "tsconfig-paths": "^4.0.0",
+        "typescript": "^5.6.2",
+        "undici": "^6.0.1",
+        "vitest": "^1.0.4"
+    },
+    "dependencies": {
+        "@koa/cors": "^5.0.0",
+        "@masx200/koa-range": "^1.0.5",
+        "@masx200/koa-stream-etag": "^5.0.8",
+        "@masx200/serve-cli": "^1.3.1",
+        "etag": "^1.8.1",
+        "fresh": "^0.5.2",
+        "graceful-fs": "^4.2.6",
+        "http-auth": "^4.1.7",
+        "koa": "^2.13.1",
+        "koa-compress": "^5.0.1",
+        "koa-conditional-get": "^3.0.0",
+        "koa-etag": "^4.0.0",
+        "koa-logger": "^3.2.1",
+        "koa-static": "^5.0.0",
+        "koa2-serve-index": "^2.0.1",
+        "minimist": "^1.2.8",
+        "webdav-server": "^2.6.2"
+    },
+    "directories": {
+        "test": "test"
+    },
+    "repository": "git+https://github.com/masx200/webdav-cli.git",
+    "author": "masx200 <masx200@qq.com>",
+    "bugs": {
+        "url": "https://github.com/masx200/webdav-cli/issues"
+    },
+    "homepage": "https://github.com/masx200/webdav-cli#readme",
+    "packageManager": "yarn@3.2.0"
 }
