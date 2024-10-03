@@ -54,7 +54,7 @@
         "hosted-git-info": "^7.0.1",
         "prettier": "^3.1.1",
         "reflect-metadata": "^0.2.0",
-        "rollup": "^3.29.5",
+        "rollup": "^4.24.0",
         "rollup-external-modules": "^2.0.0",
         "rollup-plugin-node-externals": "^7.0.0",
         "rollup-plugin-swc": "^0.2.1",
